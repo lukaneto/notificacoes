@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
 import javax.persistence.Column;
 
 @Table
@@ -53,6 +54,9 @@ public class MensagemNotificacao implements Serializable{
 	
 	@Column(name="restricao_forca")
 	private Boolean restricaoForca;
+	
+	@Column(name="tem_validade")
+	private Boolean temValidade;
 	
 	private Boolean ativo;
 
@@ -142,6 +146,14 @@ public class MensagemNotificacao implements Serializable{
 
 	public void setRestricaoForca(Boolean restricaoForca) {
 		this.restricaoForca = restricaoForca;
+	}
+	
+	public Boolean getTemValidade() {
+		return temValidade;
+	}
+
+	public void setTemValidade(Boolean temValidade) {
+		this.temValidade = temValidade;
 	}
 
 	public Boolean getAtivo() {

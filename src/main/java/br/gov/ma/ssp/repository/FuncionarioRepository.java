@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import br.gov.ma.ssp.model.Funcionario;
 
 public interface FuncionarioRepository extends JpaRepository<Funcionario,Integer>{
-	
+	Funcionario findByIdFuncionario(Integer id);
 }

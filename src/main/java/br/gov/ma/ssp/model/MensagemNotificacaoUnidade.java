@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Table
@@ -35,7 +34,7 @@ public class MensagemNotificacaoUnidade implements Serializable{
 	@Column(name="data_criacao")
 	private Date dataCricao;
 	
-	@OneToMany
+	@ManyToOne
 	@JoinColumn(name="fk_mensagem")
 	private MensagemNotificacao mensagem;
 	
