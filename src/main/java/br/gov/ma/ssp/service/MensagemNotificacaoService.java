@@ -257,7 +257,7 @@ public class MensagemNotificacaoService {
 		
 		if(Optional.ofNullable(msg.getTemValidade()).isPresent() && msg.getTemValidade() ==true) {
 			if(Optional.ofNullable(msg.getDataValidadeInicio()).isPresent() && Optional.ofNullable(msg.getDataValidadeFim()).isPresent()) {
-				if(msg.getDataValidadeInicio().before(msg.getDataValidadeFim())) {
+				if(msg.getDataValidadeInicio().before(msg.getDataValidadeFim()) && msg.getDataValidadeInicio().after(new Date())) {
 					return true;
 				}
 			}
