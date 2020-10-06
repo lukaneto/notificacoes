@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.gov.ma.ssp.model.Funcionario;
 import br.gov.ma.ssp.model.MensagemNotificacaoFuncionario;
 import br.gov.ma.ssp.repository.MensagemNotificacaoFuncionarioRepository;
 
@@ -28,5 +29,10 @@ public class MensagemNotificacaoFuncionarioService {
 	
 	public List<MensagemNotificacaoFuncionario> pesquisaTodosFuncionarios(){
 		return mensagemNotificacaoFuncionarioRepository.findAll();
+	}
+
+	public List<MensagemNotificacaoFuncionario> pesquisarFuncioanario(Funcionario funcionario) {
+		// TODO Auto-generated method stub
+		return mensagemNotificacaoFuncionarioRepository.findByFuncionarioDestinatarioAndMensagemAtivoIsTrue(funcionario);
 	}
 }

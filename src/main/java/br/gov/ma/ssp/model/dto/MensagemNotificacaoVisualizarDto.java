@@ -3,12 +3,9 @@ package br.gov.ma.ssp.model.dto;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-
-public class MensagemNotificacaoDto {
-	private Integer id;
+public class MensagemNotificacaoVisualizarDto {
+	private Integer Id;
 	private String descricao;
-	private Integer funcionarioCriador;
 	private Date dataCriacao;
 	private Date dataValidadeInicio;
 	private Date dataValidadeFim;
@@ -19,31 +16,16 @@ public class MensagemNotificacaoDto {
 	private Boolean restricaoForca;
 	private Boolean temValidade;
 	private Boolean ativo;
+	
 	private List<MensagemLinkDto> listaLink;
-	private List<MultipartFile> listaMidias;
 	
 	private Integer unidadeDestinatario;
 	private List<Integer> funcionarioDestinatario;
-	
-	
-	
-	public List<MensagemLinkDto> getListaLink() {
-		return listaLink;
-	}
-	public void setListaLink(List<MensagemLinkDto> listaLink) {
-		this.listaLink = listaLink;
-	}
-	public List<MultipartFile> getListaMidias() {
-		return listaMidias;
-	}
-	public void setListaMidias(List<MultipartFile> listaMidias) {
-		this.listaMidias = listaMidias;
-	}
 	public Integer getId() {
-		return id;
+		return Id;
 	}
 	public void setId(Integer id) {
-		id = id;
+		Id = id;
 	}
 	public String getDescricao() {
 		return descricao;
@@ -51,12 +33,7 @@ public class MensagemNotificacaoDto {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public Integer getFuncionarioCriador() {
-		return funcionarioCriador;
-	}
-	public void setFuncionarioCriador(Integer funcionarioCriador) {
-		this.funcionarioCriador = funcionarioCriador;
-	}
+	
 	public Date getDataCriacao() {
 		return dataCriacao;
 	}

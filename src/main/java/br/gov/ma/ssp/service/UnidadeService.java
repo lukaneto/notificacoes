@@ -24,11 +24,15 @@ public class UnidadeService {
 	}
 	
 
-	public Unidade pesquisarPorId(Integer unidade) {
+	public Unidade findOneUnidade(Integer unidade) {
 		return unidadeRepository.getOne(unidade);
 	}
 	
 	public List<Unidade> pesquisarTodasUnidades(){
 		return unidadeRepository.findAll();
+	}
+	
+	public List<Unidade> getUnidadesFilhas(Integer unidadePai) {
+		return unidadeRepository.findByPaiId(unidadePai);
 	}
 }
