@@ -18,9 +18,24 @@ public class MensagemNotificacaoVisualizarDto {
 	private Boolean ativo;
 	
 	private List<MensagemLinkDto> listaLink;
+	private List<MensagemImagemDto> listaImagem;
 	
 	private Integer unidadeDestinatario;
 	private List<Integer> funcionarioDestinatario;
+
+	
+	public List<MensagemLinkDto> getListaLink() {
+		return listaLink;
+	}
+	public void setListaLink(List<MensagemLinkDto> listaLink) {
+		this.listaLink = listaLink;
+	}
+	public List<MensagemImagemDto> getListaImagem() {
+		return listaImagem;
+	}
+	public void setListaImagem(List<MensagemImagemDto> listaImagem) {
+		this.listaImagem = listaImagem;
+	}
 	public Integer getId() {
 		return Id;
 	}

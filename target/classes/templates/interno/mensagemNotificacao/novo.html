@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="interno/layout/templateInterno">
+
+<section layout:fragment="content" class="sigma-section container">
+	<form id="cadastroBo" data-th-object="${notificacao}" method="POST"
+		data-th-action="@{/notificacao/salvar}">
+		
+		
+		<div class="panel panel-default">
+		
+            <div class="panel-heading">
+	          
+	           	TESTE
+	           
+            </div>		
+		
+			<div class="panel-body">
+
+				<input type="text"  th:field="*{id}"/>
+				<input type="text"  th:field="*{descricao}"/>
+				<input type="text"  th:field="*{funcionarioCriador}"/>
+				<input type="text"  th:field="*{dataCriacao}"/>
+				<input type="text"  th:field="*{dataValidadeInicio}"/>
+				<input type="text"  th:field="*{dataValidadeFim}"/>
+				<input type="text"  th:field="*{tipoMensagem}"/>
+				<input type="checkbox"  th:field="*{addUnidadeFilha}"/>
+				<input type="checkbox"  th:field="*{ehFuncionario}"/>
+				<input type="checkbox"  th:field="*{restricaoForca}"/>
+				<input type="checkbox"  th:field="*{temValidade}"/>
+				<input type="checkbox"  th:field="*{ativo}"/>
+				<input type="text"  th:field="*{dataCriacao}"/>
+				
+
+				
+			</div>
+				
+
+			<div class="panel-footer text-right">
+
+				<button type="button" name="acao" value="voltar"
+					class="btn btn-secondary">
+					<i class="fa fa-home" aria-hidden="true"></i> Voltar
+				</button>
+				
+				<button  type="submit"  class="btn btn-primary ">
+					<i class="fa fa-save" aria-hidden="true"></i> Salvar 
+				</button>
+				
+			</div>
+
+		</div>
+	</form>
+	
+
+</section>
+<th:block layout:fragment="sigma-js">
+
+
+</th:block>
+
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<header th:fragment="header">
+	<nav class="navbar navbar-default sigma-navbar fixed-nav-bar">
+	
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#menu"
+					aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" th:href="@{/acesso}" style="min-height: 3em;" > 
+					<img th:src="@{/sigma/images/favicon.png}"  width="30em" alt="SIGMA" class="img-responsive"/>
+				</a>
+			</div>
+			
+			
+		   <div th:replace="interno/layout/fragments/menu :: menu"> </div>
+			<!-- melhor cor pro menu ass: #0e3b86 -->
+	 </nav>
+ </header>
+</html>

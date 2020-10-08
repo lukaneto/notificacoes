@@ -19,8 +19,9 @@ public class MensagemNotificacaoDto {
 	private Boolean restricaoForca;
 	private Boolean temValidade;
 	private Boolean ativo;
+	
 	private List<MensagemLinkDto> listaLink;
-	private List<MultipartFile> listaMidias;
+	private List<MultipartFile> listaImagem;
 	
 	private Integer unidadeDestinatario;
 	private List<Integer> funcionarioDestinatario;
@@ -33,17 +34,20 @@ public class MensagemNotificacaoDto {
 	public void setListaLink(List<MensagemLinkDto> listaLink) {
 		this.listaLink = listaLink;
 	}
-	public List<MultipartFile> getListaMidias() {
-		return listaMidias;
+	
+
+	
+	public List<MultipartFile> getListaImagem() {
+		return listaImagem;
 	}
-	public void setListaMidias(List<MultipartFile> listaMidias) {
-		this.listaMidias = listaMidias;
+	public void setListaImagem(List<MultipartFile> listaImagem) {
+		this.listaImagem = listaImagem;
 	}
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
-		id = id;
+		this.id = id;
 	}
 	public String getDescricao() {
 		return descricao;

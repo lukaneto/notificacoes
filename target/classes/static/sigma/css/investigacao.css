@@ -1,0 +1,49 @@
+/* PAGINA INVESTIGACAO */
+
+
+/***** Remove Button *****/
+
+.add, .icon-remove { cursor: pointer; }
+.icon-remove { display: none; }
+.icon-remove {
+  display: inline;
+  vertical-align: middle;
+  font-size: 16px;
+  color: #f86f69;
+  margin-left:90px;
+}
+
+.lista-investigacao {
+	list-style: none;
+	margin-top: 5px;
+	border-bottom: 1px solid #EFEEEE;
+	padding-bottom:5px;
+	padding-top:5px;
+}
+
+.ul-investigacao{
+	padding: 0; 
+}
+.texto-lista-investigacao{
+	font-size: 14px;
+	font-family:Arial;
+	margin-left:10px;
+	 text-transform: uppercase;
+}
+
+/***** Add Button *****/
+
+.add:before { 
+  display: inline-block;
+  vertical-align: middle;
+  
+  font-family: FontAwesome;
+  font-size: 22px;
+  color: #95dd6f;
+  
+/*   content: "\f067"; */
+  letter-spacing: 14px;
+}
+#relatorio_vazio{
+	 text-align: center;	
+}

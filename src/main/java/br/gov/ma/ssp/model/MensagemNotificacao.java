@@ -1,18 +1,20 @@
 package br.gov.ma.ssp.model;
 
-import javax.persistence.Table;
-
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import javax.persistence.Column;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Table
 @Entity
@@ -59,6 +61,15 @@ public class MensagemNotificacao implements Serializable{
 	private Boolean temValidade;
 	
 	private Boolean ativo;
+	
+	
+	
+	@OneToMany(mappedBy = "mensagem",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<MensagemNotificacaoLink> listaLink;
+	
+	@OneToMany(mappedBy = "mensagem",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<MensagemNotificacaoImagem> listaImagem;
+	
 
 	public Integer getId() {
 		return id;
@@ -154,6 +165,25 @@ public class MensagemNotificacao implements Serializable{
 
 	public void setTemValidade(Boolean temValidade) {
 		this.temValidade = temValidade;
+	}
+
+	
+	
+	
+	public List<MensagemNotificacaoLink> getListaLink() {
+		return listaLink;
+	}
+
+	public void setListaLink(List<MensagemNotificacaoLink> listaLink) {
+		this.listaLink = listaLink;
+	}
+
+	public List<MensagemNotificacaoImagem> getListaImagem() {
+		return listaImagem;
+	}
+
+	public void setListaImagem(List<MensagemNotificacaoImagem> listaImagem) {
+		this.listaImagem = listaImagem;
 	}
 
 	public Boolean getAtivo() {

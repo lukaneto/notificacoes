@@ -12,10 +12,12 @@ import org.modelmapper.config.Configuration.AccessLevel;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.gov.ma.ssp.model.Funcionario;
 import br.gov.ma.ssp.model.MensagemNotificacao;
 import br.gov.ma.ssp.model.MensagemNotificacaoFuncionario;
+import br.gov.ma.ssp.model.MensagemNotificacaoImagem;
 import br.gov.ma.ssp.model.MensagemNotificacaoLink;
 import br.gov.ma.ssp.model.MensagemNotificacaoUnidade;
 import br.gov.ma.ssp.model.MensagemNotificacaoVisualizada;
@@ -51,6 +53,12 @@ public class MensagemNotificacaoService {
 	
 	@Autowired
 	private MensagemNotificacaoVisualizadaService mensagemNotificacaoVisualizadaService;
+	
+	@Autowired
+	private FileUploadMensagemNotificacaoService fileUploadService;
+	
+	@Autowired
+	private MensagemNotificacaoImagemService mensagemNotificacaoImagemService;
 	
 	public HashMap<String, String> salvar(MensagemNotificacaoDto dto){
 		Optional<MensagemNotificacaoDto> optionaldto = Optional.ofNullable(dto);
@@ -99,7 +107,7 @@ public class MensagemNotificacaoService {
 					notificacaoUnidade(dto, mensagemNotificacao);
 					notificacaoFuncionario(dto, mensagemNotificacao);
 					notificacaoLink(dto, mensagemNotificacao);
-					
+					notificacaoImagem(dto, mensagemNotificacao);
 					resultado.put("mensagemSucessoNotificacao", "Notificacao Criada com sucesso");
 				}
 			}
@@ -121,6 +129,21 @@ public class MensagemNotificacaoService {
 		
 		return resultado;	
 		
+	}
+
+	private void notificacaoImagem(MensagemNotificacaoDto dto, MensagemNotificacao mensagemNotificacao) {
+		if(Optional.ofNullable(dto.getListaImagem()).isPresent() && !dto.getListaImagem().isEmpty() ) {
+			for (MultipartFile file : dto.getListaImagem()) {
+				String imagem = fileUploadService.salvarDocumento(file);
+				MensagemNotificacaoImagem mensagemNotImagem = new MensagemNotificacaoImagem();
+				mensagemNotImagem.setAtivo(true);
+				mensagemNotImagem.setDataCriacao(new Date());
+				mensagemNotImagem.setFuncionarioCriador(mensagemNotificacao.getFuncionarioCriador());
+				mensagemNotImagem.setMensagem(mensagemNotificacao);
+				mensagemNotImagem.setDescricao(imagem);
+				mensagemNotificacaoImagemService.salvar(mensagemNotImagem);
+			}
+		}
 	}
 
 	private void notificacaoLink(MensagemNotificacaoDto dto,

@@ -1,0 +1,78 @@
+.nav-tabs { border-bottom: 2px solid #DDD !important; }
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover { border-width: 0 !important; }
+.nav-tabs > li > a { border: none !important; color: #666 !important; }
+.nav-tabs > li.active > a, .nav-tabs > li > a:hover { border: none !important; color: #4285F4 !important; background: transparent !important; }
+.nav-tabs > li > a::after { content: ""; background: #dd0000 !important; height: 2px; position: absolute; width: 100%; left: 0px; bottom: -1px; transition: all 250ms ease 0s !important; transform: scale(0) !important; }
+.nav-tabs > li.active > a::after, .nav-tabs > li:hover > a::after { transform: scale(1) !important; }
+.tab-nav > li > a::after { background: #21527d none repeat scroll 0% 0% !important; color: #fff !important; }
+
+.tab-pane { padding: 5px 0 !important; }
+.tab-content{padding:5px !important}
+
+.fa-exclamation-circle{
+	color:inherit !important;
+}
+
+.table > tbody > tr > td {
+     vertical-align: middle;
+}
+
+
+
+
+#content,
+		#sidebar {
+/* 			min-height: 500px; */
+		}
+		#row-main {
+			overflow-x: hidden; /* necessary to hide collapsed sidebar */
+		}
+		#content {
+			
+			-webkit-transition: width 0.3s ease;
+			-moz-transition: width 0.3s ease;
+			-o-transition: width 0.3s ease;
+			transition: width 0.3s ease;
+		}
+		#content .btn-group {
+			margin-bottom: 10px;
+		}
+		.col-md-9 .width-12,
+		.col-md-12 .width-9 {
+			display: none; /* just hiding labels for demo purposes */
+		}
+		#sidebar {
+			
+			-webkit-transition: margin 0.3s ease;
+			-moz-transition: margin 0.3s ease;
+			-o-transition: margin 0.3s ease;
+			transition: margin 0.3s ease
+			
+		}
+		.collapsed {
+			display: none; /* hide it for small displays */
+		}
+		@media (min-width: 992px) {
+			.collapsed {
+				display: block;
+				margin-left: -25%; /* same width as sidebar */
+			}
+		}
+
+		
+
+#toggleSidebar {
+	margin-left:1px;
+    color:#779DD7;
+    padding:06px ;
+    width:120px;
+    background-color:white;
+    font-size:26px;
+/*     border-bottom: 5px solid red; */
+}
+
+#textoExpandir{
+	padding-left:15px;
+	margin-top:-10px;
+	font-size:16px;
+}
