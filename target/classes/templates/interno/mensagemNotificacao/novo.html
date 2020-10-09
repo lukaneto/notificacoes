@@ -5,7 +5,7 @@
 	layout:decorator="interno/layout/templateInterno">
 
 <section layout:fragment="content" class="sigma-section container">
-	<form id="cadastroBo" data-th-object="${notificacao}" method="POST"
+	<form th:object="${mensagem}" method="POST"
 		data-th-action="@{/notificacao/salvar}">
 		
 		
@@ -19,19 +19,28 @@
 		
 			<div class="panel-body">
 
-				<input type="text"  th:field="*{id}"/>
-				<input type="text"  th:field="*{descricao}"/>
-				<input type="text"  th:field="*{funcionarioCriador}"/>
-				<input type="text"  th:field="*{dataCriacao}"/>
-				<input type="text"  th:field="*{dataValidadeInicio}"/>
-				<input type="text"  th:field="*{dataValidadeFim}"/>
-				<input type="text"  th:field="*{tipoMensagem}"/>
-				<input type="checkbox"  th:field="*{addUnidadeFilha}"/>
-				<input type="checkbox"  th:field="*{ehFuncionario}"/>
-				<input type="checkbox"  th:field="*{restricaoForca}"/>
-				<input type="checkbox"  th:field="*{temValidade}"/>
-				<input type="checkbox"  th:field="*{ativo}"/>
-				<input type="text"  th:field="*{dataCriacao}"/>
+				<input type="hidden"  th:field="*{id}" />
+				<label>mensagem</label>
+				<input type="text"  class="form-control input-sm" th:field="*{descricao}"/>
+				<input type="hidden"  th:field="*{funcionarioCriador}" class="form-control input-sm"/>
+				<input type="hidden"  th:field="*{dataCriacao}" class="form-control input-sm"/>
+				<label>tipo de mensagem</label>
+				<select th:field="*{tipoMensagem}" class="form-control input-sm">
+				<option th:each="tipo :${tipoMensagem}" th:value="${tipo.id}" th:text="${tipo.descricao}"> </option>
+				</select>
+				<label>add unidade filha?</label>
+				<input type="checkbox"  class="form-control input-sm" th:field="*{addUnidadeFilha}"/>
+				<label>e para funcionario?</label>
+				<input type="checkbox"  class="form-control input-sm" th:field="*{ehFuncionario}"/>
+				<label>e para restringir forca?</label>
+				<input type="checkbox"  class="form-control input-sm" th:field="*{restricaoForca}"/>
+				<label>tem validade</label>
+				<input type="checkbox"  class="form-control input-sm" th:field="*{temValidade}"/>
+				<label>data de validade de inicio</label>
+				<input type="text" placeholder="dd/mm/aaaa" class="form-control input-sm"  th:field="*{dataValidadeInicio}"/>
+				<label>data de validade de fim</label>
+				<input type="text"  placeholder="dd/mm/aaaa" class="form-control input-sm" th:field="*{dataValidadeFim}"/>
+				<input type="hidden"  th:field="*{ativo}"/>
 				
 
 				

@@ -3,14 +3,26 @@ package br.gov.ma.ssp.model.dto;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class MensagemNotificacaoDto {
 	private Integer id;
 	private String descricao;
 	private Integer funcionarioCriador;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy HH:mm:ss",locale = "pt-BR", timezone = "Brazil/East")
+	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
 	private Date dataCriacao;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy HH:mm:ss",locale = "pt-BR", timezone = "Brazil/East")
+	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
 	private Date dataValidadeInicio;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy HH:mm:ss",locale = "pt-BR", timezone = "Brazil/East")
+	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
 	private Date dataValidadeFim;
 	private Integer tipoMensagem;
 	private Boolean ehUnidade;

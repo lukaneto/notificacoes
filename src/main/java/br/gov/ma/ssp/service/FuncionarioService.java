@@ -48,7 +48,7 @@ public class FuncionarioService {
 //	
 	
 	public Funcionario pesquisarPorId(Funcionario idFuncionario) {
-		return funcionarioRepository.getOne(idFuncionario.getId());
+		return funcionarioRepository.getOne(idFuncionario.getIdFuncionario());
 	}
 	
 	public Funcionario pesquisarPorId(Integer idFuncionario) {

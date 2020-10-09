@@ -20,7 +20,7 @@ public class Funcionario implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_funcionario")
-	private Integer id;
+	private Integer idFuncionario;
 	
 	private String nome;
 	
@@ -28,12 +28,12 @@ public class Funcionario implements Serializable{
 	@JoinColumn(name="fk_unidade")
 	private Unidade unidade;
 
-	public Integer getId() {
-		return id;
+	public Integer getIdFuncionario() {
+		return idFuncionario;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setIdFuncionario(Integer id) {
+		this.idFuncionario = id;
 	}
 
 	public String getNome() {
@@ -56,7 +56,7 @@ public class Funcionario implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idFuncionario == null) ? 0 : idFuncionario.hashCode());
 		return result;
 	}
 
@@ -69,10 +69,10 @@ public class Funcionario implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Funcionario other = (Funcionario) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (idFuncionario == null) {
+			if (other.idFuncionario != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!idFuncionario.equals(other.idFuncionario))
 			return false;
 		return true;
 	}
