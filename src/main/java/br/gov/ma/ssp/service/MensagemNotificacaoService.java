@@ -63,7 +63,11 @@ public class MensagemNotificacaoService {
 	public HashMap<String, String> salvar(MensagemNotificacaoDto dto){
 		Optional<MensagemNotificacaoDto> optionaldto = Optional.ofNullable(dto);
 		HashMap<String, String> resultado = new HashMap<>();
-		
+		dto.setEhUnidade(dto.getEhUnidade()==null?true:dto.getEhUnidade());
+		if(Optional.ofNullable(dto.getTitulo()).orElse("").trim().isEmpty() 
+				|| dto.getTitulo().trim().length() > 49) {
+			resultado.put("mensagemErroTitulo", "O titulo informado  e invalido!");
+		}
 	
 		//validando as datas, que uando for uma mensagem que tem validade deve ter os periodos especificados corretamente
 		// data inicio nao pode ser inferior a data de hoje
@@ -71,23 +75,24 @@ public class MensagemNotificacaoService {
 		if(dto.getTemValidade()!=null && dto.getTemValidade() == true){
 			if(dto.getDataValidadeInicio() !=null && dto.getDataValidadeFim()!=null){
 				Date hoje = new Date();
-				if(dto.getDataValidadeInicio().before(hoje) && dto.getDataValidadeFim().before(dto.getDataValidadeInicio())){
-					resultado.put("mensagemErroDataExpirar", "A data informada e invalida!");
+				if(dto.getDataValidadeInicio().after(hoje) || dto.getDataValidadeFim().after(dto.getDataValidadeInicio())){
+					resultado.put("mensagemErroDataExpirar", "A data de fim deve ser superior a hoje, e a data de fim deve ser superior a data de inicio!");
 				}
+			}else {
+				resultado.put("mensagemErroDataExpirar", "Verifique as datas de inicio e fim  informadas, pois são invalidas!");
 			}
+			
 		}
-		
-		
-		
 		
 		//validando se a mensagem informada possui uma texto, se existe um criador, e se tem um tipo valido, informado no dto e no banco!
 		if(optionaldto.isPresent() 
 				&& !Optional.ofNullable(dto.getDescricao()).orElse("").trim().isEmpty()
 				&& dto.getFuncionarioCriador()!=null 
-				&& dto.getTipoMensagem()!=null){
+				&& dto.getTipoMensagem()!=null && dto.getTitulo()!=null && !dto.getTitulo().trim().isEmpty()
+			){
 			Funcionario funcionario  = funcionarioService.pesquisarPorId(dto.getFuncionarioCriador());
 			TipoMensagemNotificacao tipoMensagem = tipoMensagemService.pesquisaPorId(dto.getTipoMensagem());
-			if(!Optional.ofNullable(funcionario).isPresent() || !Optional.ofNullable(tipoMensagem).isPresent()){
+			if(!Optional.ofNullable(funcionario).isPresent() || !Optional.ofNullable(tipoMensagem).isPresent() || !resultado.isEmpty()){
 			
 				if(!Optional.ofNullable(tipoMensagem).isPresent()) {
 					resultado.put("mensagemErroTipoMensagem", "O tipo de Mensagem Informado  e invalido!");
@@ -115,7 +120,7 @@ public class MensagemNotificacaoService {
 			
 		}else {
 			if(Optional.ofNullable(dto.getDescricao()).orElse("").trim().isEmpty()) {
-				resultado.put("mensagemErroNotificacao", "Notificacao nao informada");
+				resultado.put("mensagemErroNotificacao", "Informe o texto da notificação!");
 			}
 			if(!Optional.ofNullable(dto.getFuncionarioCriador()).isPresent()) {
 				resultado.put("mensagemErroFuncionarioCriador", "O Criador informado e invalido !");
@@ -148,16 +153,18 @@ public class MensagemNotificacaoService {
 
 	private void notificacaoLink(MensagemNotificacaoDto dto,
 			MensagemNotificacao mensagemNotificacao) {
-		if(Optional.ofNullable(dto.getListaLink()).orElse(new ArrayList<>()).isEmpty()) {
+		if(Optional.ofNullable(dto.getListaLink()).isPresent()) {
 			for (MensagemLinkDto linkString : dto.getListaLink()) {
-				MensagemNotificacaoLink link = new MensagemNotificacaoLink();
-				link.setAtivo(true);
-				link.setDataCricao(new Date());
-				link.setFuncionarioCriador(mensagemNotificacao.getFuncionarioCriador());
-				link.setLink(linkString.getLink());
-				link.setMensagem(mensagemNotificacao);
-				link.setTitulo(linkString.getTitulo());
-				mensagemNotificacaoLinkService.salvar(link);
+				if(!linkString.getTitulo().trim().isEmpty() && !linkString.getLink().trim().isEmpty()) {
+					MensagemNotificacaoLink link = new MensagemNotificacaoLink();
+					link.setAtivo(true);
+					link.setDataCricao(new Date());
+					link.setFuncionarioCriador(mensagemNotificacao.getFuncionarioCriador());
+					link.setLink(linkString.getLink());
+					link.setMensagem(mensagemNotificacao);
+					link.setTitulo(linkString.getTitulo());
+					mensagemNotificacaoLinkService.salvar(link);
+				}
 			}
 		}
 	}
@@ -176,6 +183,8 @@ public class MensagemNotificacaoService {
 		mensagemNotificacao.setAtivo(true);
 		mensagemNotificacao.setAddUnidFilha(dto.getAddUnidadeFilha());
 		mensagemNotificacao.setId(dto.getId());
+		mensagemNotificacao.setTitulo(dto.getTitulo());
+		mensagemNotificacao.setTemValidade(dto.getTemValidade());
 	}
 
 	private boolean notificacaoFuncionario(MensagemNotificacaoDto dto,

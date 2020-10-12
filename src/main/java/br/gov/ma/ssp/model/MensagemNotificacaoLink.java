@@ -27,7 +27,7 @@ public class MensagemNotificacaoLink implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="fk_funcionario_criador")
 	private Funcionario funcionarioCriador;
-	
+	@Column(name="data_criacao")
 	private Date dataCricao;
 	
 	@ManyToOne

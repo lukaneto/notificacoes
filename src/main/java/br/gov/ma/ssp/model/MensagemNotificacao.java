@@ -26,6 +26,8 @@ public class MensagemNotificacao implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	private String titulo;
+	
 	private String descricao;
 	
 	@ManyToOne
@@ -217,6 +219,14 @@ public class MensagemNotificacao implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 	
 	

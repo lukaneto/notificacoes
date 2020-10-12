@@ -28,7 +28,7 @@ public class MensagemNotificacaoUnidade implements Serializable{
 	private Unidade unidade;
 	
 	@ManyToOne
-	@JoinColumn(name="fk_funcionario")
+	@JoinColumn(name="fk_funcionario_criador")
 	private Funcionario funcionario;
 	
 	@Column(name="data_criacao")

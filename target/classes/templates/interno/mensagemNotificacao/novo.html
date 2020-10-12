@@ -7,65 +7,268 @@
 <section layout:fragment="content" class="sigma-section container">
 	<form th:object="${mensagem}" method="POST"
 		data-th-action="@{/notificacao/salvar}">
-		
-		
+		<link rel="stylesheet"
+			th:href="@{/vendors/bootstrap/bootstrap.min.css}" />
+		<link rel="stylesheet"
+			th:href="@{/vendors/bootstrap-treeview/bootstrap-treeview.css}" />
+		<script th:src="@{/vendors/jquery/jquery-3.1.1.min.js}"></script>
+		<script th:src="@{/vendors/bootstrap/bootstrap.min.js}"></script>
+		<script th:src="@{/vendors/jquerymask/jquery.mask.min.js}"></script>
+		<script type="text/javascript"
+			th:src="@{/vendors/validator/validator.min.js}"></script>
+
 		<div class="panel panel-default">
-		
-            <div class="panel-heading">
-	          
-	           	TESTE
-	           
-            </div>		
-		
+
+			<div class="panel-heading">Cadastrar Notificação</div>
+
 			<div class="panel-body">
 
-				<input type="hidden"  th:field="*{id}" />
-				<label>mensagem</label>
-				<input type="text"  class="form-control input-sm" th:field="*{descricao}"/>
-				<input type="hidden"  th:field="*{funcionarioCriador}" class="form-control input-sm"/>
-				<input type="hidden"  th:field="*{dataCriacao}" class="form-control input-sm"/>
-				<label>tipo de mensagem</label>
-				<select th:field="*{tipoMensagem}" class="form-control input-sm">
-				<option th:each="tipo :${tipoMensagem}" th:value="${tipo.id}" th:text="${tipo.descricao}"> </option>
-				</select>
-				<label>add unidade filha?</label>
-				<input type="checkbox"  class="form-control input-sm" th:field="*{addUnidadeFilha}"/>
-				<label>e para funcionario?</label>
-				<input type="checkbox"  class="form-control input-sm" th:field="*{ehFuncionario}"/>
-				<label>e para restringir forca?</label>
-				<input type="checkbox"  class="form-control input-sm" th:field="*{restricaoForca}"/>
-				<label>tem validade</label>
-				<input type="checkbox"  class="form-control input-sm" th:field="*{temValidade}"/>
-				<label>data de validade de inicio</label>
-				<input type="text" placeholder="dd/mm/aaaa" class="form-control input-sm"  th:field="*{dataValidadeInicio}"/>
-				<label>data de validade de fim</label>
-				<input type="text"  placeholder="dd/mm/aaaa" class="form-control input-sm" th:field="*{dataValidadeFim}"/>
-				<input type="hidden"  th:field="*{ativo}"/>
+				<div class="alert alert-success" role="alert"
+					th:if="${!#strings.isEmpty(mensagemSucessoNotificacao)}">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<span th:text="${mensagemSucessoNotificacao}"></span>
+				</div>
+
+
+				<div class="alert alert-danger" role="alert"
+					th:if="${!#strings.isEmpty(mensagemErroFuncionarioCriador)}">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<span th:text="${mensagemErroFuncionarioCriador}"></span>
+				</div>
+
+
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="col-md-12">
+							<div class="alert alert-danger" role="alert"
+								th:if="${!#strings.isEmpty(mensagemErroTitulo)}">
+								<a href="#" class="close" data-dismiss="alert"
+									aria-label="close">&times;</a> <span
+									th:text="${mensagemErroTitulo}"></span>
+							</div>
+							<div class="form-group">
+								<label for="">Digite o titulo</label> <input
+									th:field="*{titulo}"></input>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+
+				<div class="row">
+					<div class="col-sm-12">
+
+						<div class="col-md-12">
+							<div class="form-group">
+								<div class="alert alert-danger" role="alert"
+									th:if="${!#strings.isEmpty(mensagemErroNotificacao)}">
+									<a href="#" class="close" data-dismiss="alert"
+										aria-label="close">&times;</a> <span
+										th:text="${mensagemErroNotificacao}"></span>
+								</div>
+
+								<label for="">Digite a mensagem</label>
+								<textarea style="resize: vertical;"
+									class="form-control auto_txt_area" th:field="*{descricao}"
+									rows="3"></textarea>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+					<div class="col-sm-12">
+						<label for="">Selecione a Unidade</label> <select
+									th:field="*{unidadeDestinatario}" class="form-control input-sm">
+									<option th:each="unidade :${listaUnidade}" th:value="${unidade.id}"
+										th:text="${unidade.descricao}"></option>
+						</select>
+						</div>
+				
+				</div>
+				</div>
+
+
+				<div class="row">
+					<div class="col-sm-12">
+
+						<div class="col-sm-4">
+							<div class="form-group">
+								<div class="alert alert-danger" role="alert"
+									th:if="${!#strings.isEmpty(mensagemErroTipoMensagem)}">
+									<a href="#" class="close" data-dismiss="alert"
+										aria-label="close">&times;</a> <span
+										th:text="${mensagemErroTipoMensagem}"></span>
+								</div>
+
+								<label for="">Prioridade de mensagem</label> <select
+									th:field="*{tipoMensagem}" class="form-control input-sm">
+									<option th:each="tipo :${tipoMensagem}" th:value="${tipo.id}"
+										th:text="${tipo.descricao}"></option>
+								</select>
+
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label>add unidade filha?</label> <input type="checkbox"
+									th:field="*{addUnidadeFilha}" />
+
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+
+								<label>e para funcionario?</label> <input type="checkbox"
+									th:field="*{ehFuncionario}" />
+							</div>
+						</div>
+
+
+
+
+
+
+					</div>
+
+
+					<input type="hidden" th:field="*{id}" /> <input type="hidden"
+						th:field="*{funcionarioCriador}" class="form-control input-sm" />
+					<input type="hidden" th:field="*{dataCriacao}"
+						class="form-control input-sm" /> <input type="hidden"
+						th:field="*{ativo}" />
+					<input type="hidden"  th:field="*{ehUnidade}"/>
+				
 				
 
+
+				</div>
+
+
+				<div class="row">
+
+					<div class="col-sm-12">
+
+						<div class="alert alert-danger" role="alert"
+							th:if="${!#strings.isEmpty(mensagemErroDataExpirar)}">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<span th:text="${mensagemErroDataExpirar}"></span>
+						</div>
+
+
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label>Tem validade</label> <input type="checkbox" class=""
+									th:field="*{temValidade}" />
+							</div>
+						</div>
+						<div class="col-sm-4 hidden validade-notificacao">
+							<div class="form-group">
+
+								<label>data de validade de inicio</label> <input type="text"
+									placeholder="dd/mm/aaaa" class="form-control input-sm "
+									th:field="*{dataValidadeInicio}" />
+							</div>
+						</div>
+						<div class="col-sm-4 hidden validade-notificacao">
+							<div class="form-group">
+
+								<label>data de validade de fim</label> <input type="text"
+									placeholder="dd/mm/aaaa" class="form-control input-sm"
+									th:field="*{dataValidadeFim}" />
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+				<div class="row">
+
+					<div class="col-sm-12">
+						<div class="panel panel-default">
+
+							<div class="panel-heading">
+								Cadastrar Link de Notificação
+								<button id="add-link" type="button" class="btn btn-primary">
+									<i class="fa fa-link"></i> Adicionar link's
+								</button>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-sm-12"></div>
+							</div>
+
+							<div class="row">
+
+								<div class="col-sm-12">
+									<div id="div-lista-links"></div>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
 				
+				
+				<div class="row">
+
+					<div class="col-sm-12">
+						<div class="panel panel-default">
+
+							<div class="panel-heading">
+								Cadastrar Link de Midia
+								<button id="add-midia" type="button" class="btn btn-primary">
+									<i class="fa fa-link"></i> Adicionar Midia
+								</button>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-sm-12"></div>
+							</div>
+
+							<div class="row">
+
+								<div class="col-sm-12">
+									<div id="div-lista-midias"></div>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+
+
+				<div class="panel-footer text-right">
+
+					<button type="button" name="acao" value="voltar"
+						class="btn btn-secondary">
+						<i class="fa fa-home" aria-hidden="true"></i> Voltar
+					</button>
+
+					<button type="submit" class="btn btn-primary ">
+						<i class="fa fa-save" aria-hidden="true"></i> Salvar
+					</button>
+
+				</div>
 			</div>
-				
-
-			<div class="panel-footer text-right">
-
-				<button type="button" name="acao" value="voltar"
-					class="btn btn-secondary">
-					<i class="fa fa-home" aria-hidden="true"></i> Voltar
-				</button>
-				
-				<button  type="submit"  class="btn btn-primary ">
-					<i class="fa fa-save" aria-hidden="true"></i> Salvar 
-				</button>
-				
-			</div>
-
-		</div>
 	</form>
-	
+
 
 </section>
 <th:block layout:fragment="sigma-js">
+
+	<script type="text/javascript" DEFER="DEFER"
+		th:src="@{/sigma/mensagemNotificacao.js}"></script>
+	<script type="text/javascript" th:src="@{/sigma/removerLink.js}"
+		DEFER="DEFER"></script>
 
 
 </th:block>

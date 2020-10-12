@@ -1,7 +1,10 @@
 package br.gov.ma.ssp.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.gov.ma.ssp.model.Unidade;
@@ -9,6 +12,8 @@ import br.gov.ma.ssp.repository.UnidadeRepository;
 
 @Service
 public class UnidadeService {
+	
+	@Autowired
 	private UnidadeRepository unidadeRepository;
 	
 	public void salvar(Unidade unidade) {
@@ -29,7 +34,7 @@ public class UnidadeService {
 	}
 	
 	public List<Unidade> pesquisarTodasUnidades(){
-		return unidadeRepository.findAll();
+		return Optional.ofNullable(unidadeRepository.findAll()).orElse(new ArrayList<>());
 	}
 	
 	public List<Unidade> getUnidadesFilhas(Integer unidadePai) {

@@ -3,6 +3,9 @@ package br.gov.ma.ssp.model.dto;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,16 +16,21 @@ public class MensagemNotificacaoDto {
 	private String descricao;
 	private Integer funcionarioCriador;
 	
+	
+	private String titulo;
+	
 	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy HH:mm:ss",locale = "pt-BR", timezone = "Brazil/East")
 	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
 	private Date dataCriacao;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy HH:mm:ss",locale = "pt-BR", timezone = "Brazil/East")
 	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataValidadeInicio;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy HH:mm:ss",locale = "pt-BR", timezone = "Brazil/East")
 	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataValidadeFim;
 	private Integer tipoMensagem;
 	private Boolean ehUnidade;
@@ -40,6 +48,14 @@ public class MensagemNotificacaoDto {
 	
 	
 	
+	
+	
+	public String getTitulo() {
+		return titulo;
+	}
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
 	public List<MensagemLinkDto> getListaLink() {
 		return listaLink;
 	}
