@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.gov.ma.ssp.model.TipoMensagemNotificacao;
 import br.gov.ma.ssp.model.dto.MensagemNotificacaoDto;
+import br.gov.ma.ssp.model.enumeration.TipoPesquisaPessoaFisica;
 import br.gov.ma.ssp.service.MensagemNotificacaoService;
 import br.gov.ma.ssp.service.TipoMensagemNotificacaoService;
 import br.gov.ma.ssp.service.UnidadeService;
@@ -48,6 +49,8 @@ public class MensagemNotificacaoController {
 		mv.addObject("listaUnidade",unidadeService.pesquisarTodasUnidades());
 		mv.addObject("tipoMensagem",tipoMensagemNotificacaoService.pesquisaTodosTipos());
 		mv.addObject("idFuncionario",1);
+		mv.addObject("listaTipoPesquisaPessoa", TipoPesquisaPessoaFisica.values());
+
 		return mv;
 	}
 	

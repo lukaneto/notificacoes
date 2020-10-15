@@ -23,6 +23,7 @@ import br.gov.ma.ssp.model.MensagemNotificacaoUnidade;
 import br.gov.ma.ssp.model.MensagemNotificacaoVisualizada;
 import br.gov.ma.ssp.model.TipoMensagemNotificacao;
 import br.gov.ma.ssp.model.Unidade;
+import br.gov.ma.ssp.model.dto.FileNotificacaoDto;
 import br.gov.ma.ssp.model.dto.MensagemLinkDto;
 import br.gov.ma.ssp.model.dto.MensagemNotificacaoDto;
 import br.gov.ma.ssp.model.dto.MensagemNotificacaoVisualizarDto;
@@ -139,14 +140,19 @@ public class MensagemNotificacaoService {
 	private void notificacaoImagem(MensagemNotificacaoDto dto, MensagemNotificacao mensagemNotificacao) {
 		if(Optional.ofNullable(dto.getListaImagem()).isPresent() && !dto.getListaImagem().isEmpty() ) {
 			for (MultipartFile file : dto.getListaImagem()) {
-				String imagem = fileUploadService.salvarDocumento(file);
-				MensagemNotificacaoImagem mensagemNotImagem = new MensagemNotificacaoImagem();
-				mensagemNotImagem.setAtivo(true);
-				mensagemNotImagem.setDataCriacao(new Date());
-				mensagemNotImagem.setFuncionarioCriador(mensagemNotificacao.getFuncionarioCriador());
-				mensagemNotImagem.setMensagem(mensagemNotificacao);
-				mensagemNotImagem.setDescricao(imagem);
-				mensagemNotificacaoImagemService.salvar(mensagemNotImagem);
+				FileNotificacaoDto imagem = fileUploadService.salvarDocumento(file);
+				
+				if(Optional.ofNullable(imagem).isPresent()) {
+					MensagemNotificacaoImagem mensagemNotImagem = new MensagemNotificacaoImagem();
+					mensagemNotImagem.setAtivo(true);
+					mensagemNotImagem.setDataCriacao(new Date());
+					mensagemNotImagem.setFuncionarioCriador(mensagemNotificacao.getFuncionarioCriador());
+					mensagemNotImagem.setMensagem(mensagemNotificacao);
+					mensagemNotImagem.setDescricao(imagem.getNome());
+					mensagemNotImagem.setImagem(imagem.getImagem());
+					mensagemNotificacaoImagemService.salvar(mensagemNotImagem);
+				}
+				
 			}
 		}
 	}

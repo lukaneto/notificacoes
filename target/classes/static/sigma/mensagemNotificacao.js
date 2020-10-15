@@ -76,5 +76,121 @@ function removeLink(objeto){
     });
 
 }
+
+
+$("#add-midia").on("click",function(){
+
+
+		var qtdLinks=0;
+	
+
+	$.each($(".lista-midia-inputs"), function() {
+		qtdLinks++;
+	});
 	
 	
+	var $str="<div class='lista-midia-inputs'>"
+	+ "<div class='col-sm-10'>"
+		+"<div class='form-group'> <label>Adicione a Imagem </label>"
+		+" <input type='file' name='listaImagem["+qtdLinks+"]' id='listaImagem["+qtdLinks+"]' class='file' data-show-upload='true' data-show-caption='true' />"
+		+"</div>"
+	+"</div>"
+	+ "<div class='col-sm-2'>"
+		+"<div class='form-group'>" 
+			+"<button  type='button' class='btn btn-danger' onclick='removeMidia($(this))' > <i class='fa fa-icon-trash'>  </i> Remover</button>"
+		+"</div>"	
+	+"</div>"
+	+" </div>";
+
+	$("#div-lista-midias").append(
+		$str
+	);
+
+});
+	
+function removeMidia(objeto){
+	var pai = objeto.parent('div').parent('div').parent('div').parent('div');
+	var index=-1;
+	 objeto.parent('div').parent('div').parent('div').find('input').each(function(i, valorMermoMermo){
+		  var arrayMatch= valorMermoMermo['name'].match(/[0-9]/gm);
+           var valorArray ='';
+           $.each(arrayMatch, function(i, valor) {
+           		valorArray+=valor;
+           });
+           index = parseInt(valorArray);
+	});
+	objeto.parent('div').parent('div').parent('div').remove();	
+
+	pai.find('input').each(function(){
+		   
+		   if(index=>0){
+		   		var nome = $(this); 
+			   var arrayMatch= nome.attr('id').match(/[0-9]/gm);
+	           var valorArray ='';
+	           $.each(arrayMatch, function(i, valor) {
+	           		valorArray+=valor;
+	           });
+	           console.log('index '+index+' valorArray '+ valorArray);
+	           if(index <= parseInt(valorArray) ){
+	           	   nome.attr('id',nome.attr('id').replace(/[0-9]/gm,parseInt(valorArray)-1 ));
+			       nome.attr('name',nome.attr('name').replace(/[0-9]/gm,parseInt(valorArray)-1 ));   
+	           } 
+		   }
+		   
+    });
+
+}
+
+
+
+
+
+
+$('select[name="funcionario_select"]').change(
+	function() {
+
+		var tipo = $(this).val();
+		switch (tipo) {
+		case 'Selecione':
+			$('#pesquisa_funcionario').val('');
+			$('#pesquisa_funcionario').prop('disabled', true);
+			$('#pesquisa_funcionario').attr('placeholder', 'Selecione o tipo da pesquisa');
+			$('#btn_pesquisa_funcionario').prop('disabled', true);
+			break;
+		case 'NO':
+			$('#pesquisa_funcionario').prop('disabled', false);
+			$('#btn_pesquisa_funcionario').prop('disabled', false);
+			$('#pesquisa_funcionario').val('');
+			$('#pesquisa_funcionario').unmask();
+			$('#pesquisa_funcionario').attr('placeholder', 'Digite o nome ou parte do nome');
+			break;
+		case 'NE':
+			$('#pesquisa_funcionario').prop('disabled', false);
+			$('#btn_pesquisa_funcionario').prop('disabled', false);
+			$('#pesquisa_funcionario').val('');
+			$('#pesquisa_funcionario').unmask();
+			$('#pesquisa_funcionario').attr('placeholder', 'Digite o nome exato da pessoa física');
+			break;
+		case 'MM':
+			$('#pesquisa_funcionario').prop('disabled', false);
+			$('#btn_pesquisa_funcionario').prop('disabled', false);
+			$('#pesquisa_funcionario').val('');
+			$('#pesquisa_funcionario').unmask();
+			$('#pesquisa_funcionario').attr('placeholder','Digite o nome exato da mãe da pessoa física');
+			break;
+		case 'CPF':
+			$('#pesquisa_funcionario').prop('disabled', false);
+			$('#btn_pesquisa_funcionario').prop('disabled', false);
+			$('#pesquisa_funcionario').val('');
+			$('#pesquisa_funcionario').mask('000.000.000-00');
+			$('#pesquisa_funcionario').attr('placeholder', '000.000.000-00');
+			break;
+		case 'MA':
+			$('#pesquisa_funcionario').prop('disabled', false);
+			$('#btn_pesquisa_funcionario').prop('disabled', false)
+			$('#pesquisa_funcionario').val('');
+			$('#pesquisa_funcionario').unmask();
+			$('#pesquisa_funcionario').attr('placeholder', 'Digite a matricula pessoa física');
+			break;
+		}
+});

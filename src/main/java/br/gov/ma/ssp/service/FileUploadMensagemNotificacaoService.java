@@ -6,10 +6,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import br.gov.ma.ssp.model.dto.FileNotificacaoDto;
 
 
 
@@ -18,27 +21,31 @@ public class FileUploadMensagemNotificacaoService {
 
 	
 	//@Value("${varservidorarquivo}")
-	private final String VAR_SERVIDOR_ARQUIVO= "C:\\\\Users\\\\luiz\\\\Documents\\\\opt\\\\data\\\\sigma-desenvolvimento\\\\Notificacoes";
+	private final String VAR_SERVIDOR_ARQUIVO= "C:\\Users\\luiz\\Pictures\\opt\\data\\sigma-desenvolvimento\\Notificacoes\\";
 	
-	public String salvarDocumento(MultipartFile multipartFile) {
+	public FileNotificacaoDto salvarDocumento(MultipartFile multipartFile) {
 		
 		if(Optional.ofNullable(multipartFile).isPresent()) {
 			
-			String nome = getFormatDate(multipartFile.getName());
+			String nome = getFormatDate(multipartFile.getOriginalFilename());
 			
 			 try {
 
-		            byte[] bytes = multipartFile.getBytes();
+				 	byte[] bytes = multipartFile.getBytes();
 		            Path path = Paths.get(VAR_SERVIDOR_ARQUIVO + nome);
 		            Files.write(path, bytes);
-		            return VAR_SERVIDOR_ARQUIVO + nome;
+		            FileNotificacaoDto nomeFile = new FileNotificacaoDto();
+		            nomeFile.setNome(nome);
+		            nomeFile.setImagem(VAR_SERVIDOR_ARQUIVO + nome);
+		           
+		            return nomeFile;
 		        } catch (IOException e) {
 		            e.printStackTrace();
 		        }				
 	
 		}
 		
-		return "";
+		return null;
 	}
 	
 	private String getFormatDate(String nome) {
@@ -47,12 +54,12 @@ public class FileUploadMensagemNotificacaoService {
 			String data = newFormat.format(new Date());
 			nome = nome.replaceAll(" ", "")
 					.replaceAll("/","")
-					.replaceAll("*","")
+					.replaceAll("\\*","")
 					.replaceAll(";", "")
 					.replaceAll(",", "")
 					.replaceAll("-", "")
 					.replaceAll("", "");
-			return nome+"_"+data;
+			return data+"_"+nome;
 		}
 		return "";
 	}
