@@ -144,11 +144,7 @@ function removeMidia(objeto){
 
 
 
-
-
-$('select[name="funcionario_select"]').change(
-	function() {
-
+$('select[name="funcionario_select"]').change(function() {
 		var tipo = $(this).val();
 		switch (tipo) {
 		case 'Selecione':
@@ -194,3 +190,6 @@ $('select[name="funcionario_select"]').change(
 			break;
 		}
 });
+
+
+

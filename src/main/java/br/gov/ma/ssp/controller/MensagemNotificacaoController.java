@@ -15,11 +15,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.gov.ma.ssp.model.Funcionario;
 import br.gov.ma.ssp.model.TipoMensagemNotificacao;
+import br.gov.ma.ssp.model.Unidade;
 import br.gov.ma.ssp.model.dto.MensagemNotificacaoDto;
+import br.gov.ma.ssp.model.dto.MensagemNotificacaoVisualizarDto;
 import br.gov.ma.ssp.model.enumeration.TipoPesquisaPessoaFisica;
 import br.gov.ma.ssp.service.MensagemNotificacaoService;
 import br.gov.ma.ssp.service.TipoMensagemNotificacaoService;
@@ -82,6 +86,31 @@ public class MensagemNotificacaoController {
 	}
 	
 	
+	
+	@GetMapping("/index")
+	public ModelAndView index(MensagemNotificacaoDto mensagem) {
+		ModelAndView mv = new ModelAndView("interno/mensagemNotificacao/index");
+		mv.addObject("idFuncionario",1);
+
+		return mv;
+	}
+	
+	@ResponseBody
+	@GetMapping("/lista")
+	public List<MensagemNotificacaoVisualizarDto> listaNotificacoes(/* , HttpSession session */){
+		Funcionario funcionario = new Funcionario();
+		funcionario.setIdFuncionario(1);
+		Unidade unidade = new Unidade();
+		unidade.setId(1);
+		funcionario.setUnidade(unidade);
+		/*
+		 * EquipeBo usuario = (EquipeBo) session.getAttribute("hs_func"); Funcionario
+		 * funcionario =
+		 * funcionarioService.procuraPorIdFuncionarioVw(usuario.getIdFuncionario());
+		 */
+		return mensagemNotificacaoService.getMensagensFuncionario(funcionario);
+	
+	}
 	
 	
 	

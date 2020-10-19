@@ -9,7 +9,7 @@ public class MensagemNotificacaoVisualizarDto {
 	private Date dataCriacao;
 	private Date dataValidadeInicio;
 	private Date dataValidadeFim;
-	private Integer tipoMensagem;
+	private TipoNotificacaoDto tipoMensagem;
 	private Boolean ehUnidade;
 	private Boolean addUnidadeFilha;
 	private Boolean ehFuncionario;
@@ -67,10 +67,10 @@ public class MensagemNotificacaoVisualizarDto {
 	public void setDataValidadeFim(Date dataValidadeFim) {
 		this.dataValidadeFim = dataValidadeFim;
 	}
-	public Integer getTipoMensagem() {
+	public TipoNotificacaoDto getTipoMensagem() {
 		return tipoMensagem;
 	}
-	public void setTipoMensagem(Integer tipoMensagem) {
+	public void setTipoMensagem(TipoNotificacaoDto tipoMensagem) {
 		this.tipoMensagem = tipoMensagem;
 	}
 	public Boolean getEhUnidade() {
