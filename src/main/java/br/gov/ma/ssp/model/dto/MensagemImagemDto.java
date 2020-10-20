@@ -4,6 +4,8 @@ public class MensagemImagemDto {
 
 	private Integer id;
 	private String descricao;
+	
+	private String imagem;
 	public Integer getId() {
 		return id;
 	}
@@ -15,6 +17,12 @@ public class MensagemImagemDto {
 	}
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+	public String getImagem() {
+		return imagem;
+	}
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
 	}
 	
 	

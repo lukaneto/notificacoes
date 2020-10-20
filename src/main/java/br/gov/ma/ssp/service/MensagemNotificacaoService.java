@@ -1,6 +1,7 @@
 package br.gov.ma.ssp.service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,10 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration.AccessLevel;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,7 +32,9 @@ import br.gov.ma.ssp.model.dto.FileNotificacaoDto;
 import br.gov.ma.ssp.model.dto.MensagemLinkDto;
 import br.gov.ma.ssp.model.dto.MensagemNotificacaoDto;
 import br.gov.ma.ssp.model.dto.MensagemNotificacaoVisualizarDto;
+import br.gov.ma.ssp.model.dto.PaginaNotificacaoDto;
 import br.gov.ma.ssp.repository.MensagemNotificacaoRepository;
+import br.gov.ma.ssp.repository.MensagemNotificacaoVisualizadaRepository;
 
 @Service
 public class MensagemNotificacaoService {
@@ -60,6 +67,9 @@ public class MensagemNotificacaoService {
 	
 	@Autowired
 	private MensagemNotificacaoImagemService mensagemNotificacaoImagemService;
+	
+	@Autowired
+	private MensagemNotificacaoVisualizadaRepository mensagemNotificacaoVisualizadaRepository;
 	
 	public HashMap<String, String> salvar(MensagemNotificacaoDto dto){
 		Optional<MensagemNotificacaoDto> optionaldto = Optional.ofNullable(dto);
@@ -286,7 +296,31 @@ public class MensagemNotificacaoService {
 		msg.addAll(msgUnidade);
 		msg.addAll(msgFuncionario);
 		List<MensagemNotificacaoVisualizarDto> dto = new ArrayList<>();
-		dto = msg.stream().map(this::entidadeParaDto).distinct().collect(Collectors.toList());
+		dto = msg.stream().map(this::entidadeParaDto)
+				.sorted(Comparator.comparing(MensagemNotificacaoVisualizarDto::getDataCriacao).reversed())
+				.distinct().collect(Collectors.toList());
+		return dto;
+		
+	}
+	
+	
+	public List<MensagemNotificacaoVisualizarDto> getMensagensFuncionarioPaginado(Funcionario funcionario,Pageable pageable){
+		List<MensagemNotificacaoUnidade> notificacoesUnidade = mensagemNotificacaoUnidadeService.pesquisarPorUnidadeFuncionarioPaginado(funcionario.getUnidade(),pageable);
+		List<MensagemNotificacaoFuncionario> notificacaoFuncioanrio = mensagemNotificacaoFuncionarioService.pesquisarFuncioanarioPaginado(funcionario,pageable);
+		
+		List<MensagemNotificacao> msg = new ArrayList<>();
+		List<MensagemNotificacao> msgUnidade = notificacoesUnidade.stream()
+				.filter(nu-> validaMensagem(nu.getMensagem())==true )
+				.map(MensagemNotificacaoUnidade::getMensagem).distinct().collect(Collectors.toList());
+		List<MensagemNotificacao> msgFuncionario = notificacaoFuncioanrio.stream()
+				.filter(nf-> validaMensagem(nf.getMensagem())==true )
+				.map(MensagemNotificacaoFuncionario::getMensagem).distinct().collect(Collectors.toList());
+		msg.addAll(msgUnidade);
+		msg.addAll(msgFuncionario);
+		List<MensagemNotificacaoVisualizarDto> dto = new ArrayList<>();
+		dto = msg.stream().map(this::entidadeParaDto)
+				.sorted(Comparator.comparing(MensagemNotificacaoVisualizarDto::getDataCriacao).reversed())
+				.distinct().collect(Collectors.toList());
 		return dto;
 		
 	}
@@ -333,6 +367,70 @@ public class MensagemNotificacaoService {
 		resultado.put("mensagemErroVisualizar", "A Mensagem Informado  e invalido!");
 		return resultado;
 		
+	}
+	
+	public PaginaNotificacaoDto getPagina(Pageable pageable, Funcionario funcionario) {
+		
+		PaginaNotificacaoDto pagina = new PaginaNotificacaoDto();
+		
+		
+		List<MensagemNotificacaoVisualizarDto> listaTotal = getMensagensFuncionario(funcionario);
+		Integer tamanho =listaTotal.size();
+		List<MensagemNotificacaoVisualizarDto> listaPagina = getMensagensFuncionarioPaginado(funcionario,pageable);
+		
+		
+		List<MensagemNotificacaoVisualizarDto> listaNaoVisualizada =  getListaNaoVisualizadas(listaTotal,funcionario);
+		pagina.setPagina(pageable.getPageNumber());
+		pagina.setQuantidadeNaoVisualizada(listaNaoVisualizada.size());
+		pagina.setNotificacaoNaoVisualizada(listaNaoVisualizada(listaPagina,listaNaoVisualizada) );
+		pagina.setQuantidadeTotalNotificacao(listaPagina.size());
+		pagina.setMaxPagina(tamanho/pageable.getPageSize());		
+	
+		List<MensagemNotificacaoVisualizarDto> visualizada = getListaVisualizada(listaPagina, listaNaoVisualizada);
+		
+		pagina.setNotificacao(visualizada);
+	
+		
+		return pagina;
+		
+	}
+
+	private List<MensagemNotificacaoVisualizarDto> getListaVisualizada(
+			List<MensagemNotificacaoVisualizarDto> listaPagina,
+			List<MensagemNotificacaoVisualizarDto> listaNaoVisualizada) {
+		List<MensagemNotificacaoVisualizarDto> visualizada = new ArrayList<MensagemNotificacaoVisualizarDto>();
+		
+		for (MensagemNotificacaoVisualizarDto mensagemNotificacaoVisualizarDto : listaPagina) {
+			if(!listaNaoVisualizada.contains(mensagemNotificacaoVisualizarDto)) {
+				visualizada.add(mensagemNotificacaoVisualizarDto);
+			}
+		}
+		return visualizada;
+	}
+	
+	private List<MensagemNotificacaoVisualizarDto> listaNaoVisualizada(List<MensagemNotificacaoVisualizarDto> listaPagina,List<MensagemNotificacaoVisualizarDto> listaNaoVisualizada ) {
+		List<MensagemNotificacaoVisualizarDto> resultado = new ArrayList<>();
+		
+		resultado = listaPagina.stream().filter(p-> listaNaoVisualizada.contains(p) )
+				.collect(Collectors.toList());
+		
+		return resultado;
+	}
+	
+	
+	
+	private List<MensagemNotificacaoVisualizarDto> getListaNaoVisualizadas(List<MensagemNotificacaoVisualizarDto> mensagens, Funcionario funcionario){
+		List<MensagemNotificacaoVisualizarDto> visualizada = new ArrayList<MensagemNotificacaoVisualizarDto>();
+		for (MensagemNotificacaoVisualizarDto mensagemNotificacaoVisualizarDto : mensagens) {
+			List<MensagemNotificacaoVisualizada> lista = mensagemNotificacaoVisualizadaRepository
+					.findByFuncionarioDestinatarioAndMensagemId(funcionario, mensagemNotificacaoVisualizarDto.getId());
+			if(!Optional.ofNullable(lista).isPresent() ||  Optional.ofNullable(lista).orElse(new ArrayList<>()).isEmpty()) {
+				visualizada.add(mensagemNotificacaoVisualizarDto);
+			}
+		}
+		
+		
+		return visualizada;
 	}
 }
 

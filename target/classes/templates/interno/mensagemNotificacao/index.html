@@ -7,32 +7,109 @@
 <section layout:fragment="content" class="sigma-section container">
 
 
-		<link rel="stylesheet"
-			th:href="@{/vendors/bootstrap/bootstrap.min.css}" />
-		<link rel="stylesheet"
-			th:href="@{/vendors/bootstrap-treeview/bootstrap-treeview.css}" />
-		<script th:src="@{/vendors/jquery/jquery-3.1.1.min.js}"></script>
-		<script th:src="@{/vendors/bootstrap/bootstrap.min.js}"></script>
-		<script th:src="@{/vendors/jquerymask/jquery.mask.min.js}"></script>
-		<script type="text/javascript"
-			th:src="@{/vendors/validator/validator.min.js}"></script>
+	<link rel="stylesheet"
+		th:href="@{/vendors/bootstrap/bootstrap.min.css}" />
+	<link rel="stylesheet"
+		th:href="@{/vendors/bootstrap-treeview/bootstrap-treeview.css}" />
+	<script th:src="@{/vendors/jquery/jquery-3.1.1.min.js}"></script>
+	<script th:src="@{/vendors/bootstrap/bootstrap.min.js}"></script>
+	<script th:src="@{/vendors/jquerymask/jquery.mask.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/vendors/validator/validator.min.js}"></script>
 
-		<link rel="stylesheet" th:href="@{/sigma/css/notificacao.css}" />
-	<link rel="stylesheet" th:href="@{/vendors/font-awesome/4.7.0/css/font-awesome.min.css}"/>
+	<link rel="stylesheet" th:href="@{/sigma/css/notificacao.css}" />
+	<link rel="stylesheet"
+		th:href="@{/vendors/font-awesome/4.7.0/css/font-awesome.min.css}" />
 
 
 
-<div class="container">
-    <nav>
-<div class="wrapper">
-    <ul class="menu">
-        <li><a href="#">Profile</a></li>
-        <li><a href="#">Setting</a></li>
-        <li><a href="#" id="teste"><i class="fa fa-bell"></i>Notifications</a></li>
-        <li><a href="#">Logout</a></li>
-    </ul> 
+	<div class="container">
+
+
+
+		<div class="dropdown" id="menu">
+			<a id="dLabel" role="button" data-toggle="dropdown" >
+
+				<span class="badge badge-success"> <span id="qtd_notificacao">
+				</span> <i class="fa fa-bell"></i>
+			</span> Notifications
+			</a>
+
+			<ul class="dropdown-menu notifications" role="menu"
+				aria-labelledby="dLabel">
+
+				<div class="notification-heading">
+					<h4 class="menu-title">Notifications</h4>
+					<h4 class="menu-title pull-right">
+						View all <i class="glyphicon glyphicon-circle-arrow-right"></i>
+					</h4>
+				</div>
+				<li class="divider"></li>
+				<div class="notifications-wrapper"></div>
+				<li class="divider"></li>
+				<div class="notification-footer">
+					<h4 class="menu-title">
+						View all <i class="glyphicon glyphicon-circle-arrow-right"></i>
+					</h4>
+				</div>
+			</ul>
+
+		</div>
+
+
+
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="modal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal_title"></h5>
+       
+      </div>
+      <div class="modal-body" id="modal_body">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
-</nav>
+
+
+
+
+
+
+
+
+
+
+
+
 </section>
 <th:block layout:fragment="sigma-js">
 

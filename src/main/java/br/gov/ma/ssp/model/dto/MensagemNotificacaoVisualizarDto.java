@@ -16,6 +16,7 @@ public class MensagemNotificacaoVisualizarDto {
 	private Boolean restricaoForca;
 	private Boolean temValidade;
 	private Boolean ativo;
+	private String titulo;
 	
 	private List<MensagemLinkDto> listaLink;
 	private List<MensagemImagemDto> listaImagem;
@@ -24,6 +25,12 @@ public class MensagemNotificacaoVisualizarDto {
 	private List<Integer> funcionarioDestinatario;
 
 	
+	public String getTitulo() {
+		return titulo;
+	}
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
 	public List<MensagemLinkDto> getListaLink() {
 		return listaLink;
 	}
@@ -120,6 +127,29 @@ public class MensagemNotificacaoVisualizarDto {
 	}
 	public void setFuncionarioDestinatario(List<Integer> funcionarioDestinatario) {
 		this.funcionarioDestinatario = funcionarioDestinatario;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((Id == null) ? 0 : Id.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MensagemNotificacaoVisualizarDto other = (MensagemNotificacaoVisualizarDto) obj;
+		if (Id == null) {
+			if (other.Id != null)
+				return false;
+		} else if (!Id.equals(other.Id))
+			return false;
+		return true;
 	}
 	
 	
