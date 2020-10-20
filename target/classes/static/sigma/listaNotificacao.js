@@ -77,6 +77,7 @@ function abrirModal(div)
 	
 	var body = "<div class='row'>"
 	
+	
 	+"<div class='col-sm-12'>  <p>"+el.descricao+" </p> </div>";
 	body= body+"</div>";
 	$('#modal_body').append(body);
