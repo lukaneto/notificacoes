@@ -68,8 +68,7 @@ public class MensagemNotificacaoService {
 	@Autowired
 	private MensagemNotificacaoImagemService mensagemNotificacaoImagemService;
 	
-	@Autowired
-	private MensagemNotificacaoVisualizadaRepository mensagemNotificacaoVisualizadaRepository;
+	
 	
 	public HashMap<String, String> salvar(MensagemNotificacaoDto dto){
 		Optional<MensagemNotificacaoDto> optionaldto = Optional.ofNullable(dto);
@@ -383,13 +382,17 @@ public class MensagemNotificacaoService {
 		pagina.setPagina(pageable.getPageNumber());
 		pagina.setQuantidadeNaoVisualizada(listaNaoVisualizada.size());
 		pagina.setNotificacaoNaoVisualizada(listaNaoVisualizada(listaPagina,listaNaoVisualizada) );
+		
+		
+		
 		pagina.setQuantidadeTotalNotificacao(listaPagina.size());
 		pagina.setMaxPagina(tamanho/pageable.getPageSize());		
 	
 		List<MensagemNotificacaoVisualizarDto> visualizada = getListaVisualizada(listaPagina, listaNaoVisualizada);
 		
+		
 		pagina.setNotificacao(visualizada);
-	
+		pagina.setTodasNotificacoes(getAllLists(pagina.getNotificacao(),pagina.getNotificacaoNaoVisualizada()));
 		
 		return pagina;
 		
@@ -402,6 +405,7 @@ public class MensagemNotificacaoService {
 		
 		for (MensagemNotificacaoVisualizarDto mensagemNotificacaoVisualizarDto : listaPagina) {
 			if(!listaNaoVisualizada.contains(mensagemNotificacaoVisualizarDto)) {
+				mensagemNotificacaoVisualizarDto.setVisualizado(true);
 				visualizada.add(mensagemNotificacaoVisualizarDto);
 			}
 		}
@@ -417,13 +421,20 @@ public class MensagemNotificacaoService {
 		return resultado;
 	}
 	
+	private  List<MensagemNotificacaoVisualizarDto> getAllLists(List<MensagemNotificacaoVisualizarDto> vista, List<MensagemNotificacaoVisualizarDto> naoVista){
+		List<MensagemNotificacaoVisualizarDto> resultado = new ArrayList<>();
+		resultado.addAll(naoVista);
+		resultado.addAll(vista);
+		return resultado;
+		
+	}
 	
 	
 	private List<MensagemNotificacaoVisualizarDto> getListaNaoVisualizadas(List<MensagemNotificacaoVisualizarDto> mensagens, Funcionario funcionario){
 		List<MensagemNotificacaoVisualizarDto> visualizada = new ArrayList<MensagemNotificacaoVisualizarDto>();
 		for (MensagemNotificacaoVisualizarDto mensagemNotificacaoVisualizarDto : mensagens) {
-			List<MensagemNotificacaoVisualizada> lista = mensagemNotificacaoVisualizadaRepository
-					.findByFuncionarioDestinatarioAndMensagemId(funcionario, mensagemNotificacaoVisualizarDto.getId());
+			/**/
+			List<MensagemNotificacaoVisualizada> lista = mensagemNotificacaoVisualizadaService.pesquisarPorFuncionarioEMensagem(funcionario,mensagemNotificacaoVisualizarDto.getId());
 			if(!Optional.ofNullable(lista).isPresent() ||  Optional.ofNullable(lista).orElse(new ArrayList<>()).isEmpty()) {
 				visualizada.add(mensagemNotificacaoVisualizarDto);
 			}
@@ -432,5 +443,23 @@ public class MensagemNotificacaoService {
 		
 		return visualizada;
 	}
+
+
+	public boolean visualizar (MensagemNotificacao mensagem, Funcionario funcionario) {
+		
+		List<MensagemNotificacaoVisualizada> lista = mensagemNotificacaoVisualizadaService.pesquisarPorFuncionarioEMensagem(funcionario,mensagem.getId());
+		if(!Optional.ofNullable(lista).isPresent() || lista.isEmpty() ) {
+			mensagem = mensagemNotificacaoRepository.getOne(mensagem.getId());
+			MensagemNotificacaoVisualizada mensagemNotVisualizada = new MensagemNotificacaoVisualizada();
+			mensagemNotVisualizada.setDataVisualizacao(new Date());
+			mensagemNotVisualizada.setFuncionarioDestinatario(funcionario);
+			mensagemNotVisualizada.setMensagem(mensagem);
+			mensagemNotificacaoVisualizadaService.salvar(mensagemNotVisualizada);
+			return true;
+		}
+		
+		return false;
+	}
+
 }
 

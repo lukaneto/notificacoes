@@ -3,6 +3,11 @@
 }
 
 
+.carousel-inner img {
+      width: 100%;
+      height: 100%;
+}
+
 /* CSS used here will be applied after bootstrap.css */
 
 .dropdown {

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="interno/layout/templateInterno">
+
+<section layout:fragment="content" class="sigma-section container">
+
+
+	<link rel="stylesheet"
+		th:href="@{/vendors/bootstrap/bootstrap.min.css}" />
+	<link rel="stylesheet"
+		th:href="@{/vendors/bootstrap-treeview/bootstrap-treeview.css}" />
+	<script th:src="@{/vendors/jquery/jquery-3.1.1.min.js}"></script>
+	<script th:src="@{/vendors/bootstrap/bootstrap.min.js}"></script>
+	<script th:src="@{/vendors/jquerymask/jquery.mask.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/vendors/validator/validator.min.js}"></script>
+
+	<link rel="stylesheet" th:href="@{/sigma/css/notificacao.css}" />
+	<link rel="stylesheet"
+		th:href="@{/vendors/font-awesome/4.7.0/css/font-awesome.min.css}" />
+
+
+
+	<div class="container">
+
+
+
+
+		<div class="row">
+			<div class="col-sm-2">
+				<nav class="nav-sidebar">
+					<ul class="nav tabs">
+
+					
+						
+						<li th:each="resumo,count : ${pagina.todasNotificacoes}"
+							th:class="${count.index} ==0? 'active list-group-item':'list-group-item' ">
+							<a th:href="|#tab${resumo.id}|" data-toggle="tab"> <span
+								th:text="${resumo.titulo}">
+								
+							</span> <small th:text="${#dates.format(resumo.dataCriacao, 'dd-MM-yyyy HH:mm:ss')} ">  </small></a>
+						</li>
+						
+						
+						
+					</ul>
+				</nav>
+				
+				
+				<ul class="pager">
+				  <li><a th:if="${pagina.pagina > 0}" th:href="@{/notificacao/paginacao?page=0}"> Primeira </a></li> 
+				  <li><a th:if="${pagina.pagina > 0}" th:href="'/notificacao/paginacao?page='+${pagina.pagina - 1}"> <span > Anterior </span></a></li>
+<!-- 				  <li><a th:href="'/notificacao/paginacao?page='+${pagina.pagina}">  <span th:text="${pagina.pagina ==0}? 'Primeira': 'Pagina'" ></span> </a></li> -->
+				  <li><a th:if="${pagina.pagina+1} < ${pagina.maxPagina} " th:href="'/notificacao/paginacao?page='+${pagina.pagina + 1}"> <span> Proxima </span> </a></li>
+				  <li><a th:if="${pagina.pagina+1} == ${pagina.maxPagina} "    th:href="'/notificacao/paginacao?page='+ ${pagina.maxPagina}">Ultima</a></li>
+				</ul>
+				
+				
+			</div>
+		
+			<div class="tab-content">
+			
+			
+			
+			
+			
+				<div th:each="resumo,count : ${pagina.todasNotificacoes}"
+					th:class="${count.index} ==0?'tab-pane active text-style': 'tab-pane text-style'"
+					th:id="|tab${resumo.id}|">
+
+						
+						<h2>
+							<span th:text="${resumo.titulo}"></span>
+						</h2>
+						<p>
+							<span th:text="${resumo.descricao}"></span>
+							
+							<small th:text="${resumo.dataCriacao}">  </small>
+						</p>
+
+
+					<hr>
+						<div class="col-xs-6 col-md-3">
+						
+						
+						
+						<div th:if="${#lists.size(resumo.listaImagem)} > 0" 
+							th:id="|myCarousel${resumo.id}|" class="carousel slide"
+							data-ride="carousel">
+							<ol class="carousel-indicators" >
+								<li  th:each="imagem,count : ${resumo.listaImagem}" th:data-target="|#myCarousel${resumo.id}|"
+									th:data-slide-to="${count.index}"
+									th:class="${count.index} ==0? 'active':''"></li>
+
+							</ol>
+							<div class="carousel-inner" >
+								<div th:each="imagem,count : ${resumo.listaImagem}" th:class="${count.index} ==0?'item active':'item'">
+									
+									<img th:src="|http://127.0.0.1:8887${#strings.replace(#strings.replace(imagem.imagem,'C:',''),'\','/')}| " th:alt="${imagem.descricao}" />
+								</div>
+							</div>
+							
+						</div>
+						
+							<a th:if="${resumo.listaImagem}!=null and ${#lists.size(resumo.listaImagem)} > 0" class="left carousel-control"
+								th:href="|#myCarousel${resumo.id}|" data-slide='prev'> <span
+								class='glyphicon glyphicon-chevron-left'> </span> <span
+								class='sr-only'>Previous</span>
+							</a> 
+							<a th:if="${resumo.listaImagem}!=null and ${#lists.size(resumo.listaImagem)} > 0" class="right carousel-control"
+								th:href="|#myCarousel${resumo.id}|" data-slide='next'> <span
+								class="glyphicon glyphicon-chevron-right"></span> <span
+								class='sr-only'>Next</span>
+							</a>
+						
+					</div>
+					</div>
+			
+			
+			
+			
+
+			</div>
+		</div>
+
+
+
+
+
+
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 	<!-- <div id="modal" class="modal" tabindex="-1" role="dialog"> -->
+<!-- 		<div class="modal-dialog" role="document"> -->
+<!-- 			<div class="modal-content"> -->
+<!-- 				<div class="modal-header"> -->
+<!-- 					<h5 class="modal-title" id="modal_title"></h5> -->
+
+<!-- 				</div> -->
+<!-- 				<div class="modal-body" id="modal_body"></div> -->
+<!-- 				<div class="modal-footer"> -->
+<!-- 					<button type="button" class="btn btn-secondary" -->
+<!-- 						data-dismiss="modal">Close</button> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</div> --> 
+
+
+
+
+
+
+
+
+
+
+
+
+</section>
+<th:block layout:fragment="sigma-js">
+
+	<!-- <script type="text/javascript" th:src="@{/sigma/listaNotificacao.js}"
+		DEFER="DEFER"></script> -->
+<!-- 
+	<script type="text/javascript" th:src="@{/sigma/biometria.js}"
+		DEFER="DEFER"></script> -->
+</th:block>
+
+</html>

@@ -27,7 +27,7 @@
 
 
 
-		<div class="dropdown" id="menu">
+	 <div class="dropdown" id="menu">
 			<a id="dLabel" role="button" data-toggle="dropdown" >
 
 				<span class="badge badge-success"> <span id="qtd_notificacao">
@@ -41,7 +41,9 @@
 				<div class="notification-heading">
 					<h4 class="menu-title">Notifications</h4>
 					<h4 class="menu-title pull-right">
-						View all <i class="glyphicon glyphicon-circle-arrow-right"></i>
+						<a th:href="@{/notificacao/paginacao}" target="_blank">
+							Ver todas <i class="glyphicon glyphicon-circle-arrow-right"></i>
+						</a>
 					</h4>
 				</div>
 				<li class="divider"></li>
@@ -49,12 +51,20 @@
 				<li class="divider"></li>
 				<div class="notification-footer">
 					<h4 class="menu-title">
-						View all <i class="glyphicon glyphicon-circle-arrow-right"></i>
+					<a th:href="@{/notificacao/paginacao}" target="_blank">
+						Ver todas <i class="glyphicon glyphicon-circle-arrow-right"></i>
+					</a>
+						
 					</h4>
 				</div>
-			</ul>
+			</ul> 
+			
+			
+		
 
 		</div>
+		
+
 
 
 
@@ -80,24 +90,21 @@
 
 
 
+	<div id="modal" class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modal_title"></h5>
 
-
-<div id="modal" class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modal_title"></h5>
-       
-      </div>
-      <div class="modal-body" id="modal_body">
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+				</div>
+				<div class="modal-body" id="modal_body"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 
@@ -116,7 +123,8 @@
 	<script type="text/javascript" th:src="@{/sigma/listaNotificacao.js}"
 		DEFER="DEFER"></script>
 
-
+<script type="text/javascript" th:src="@{/sigma/biometria.js}"
+		DEFER="DEFER"></script>
 </th:block>
 
 </html>

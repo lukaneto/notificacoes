@@ -1,26 +1,19 @@
 package br.gov.ma.ssp.controller;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,7 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.gov.ma.ssp.model.Funcionario;
-import br.gov.ma.ssp.model.TipoMensagemNotificacao;
+import br.gov.ma.ssp.model.MensagemNotificacao;
 import br.gov.ma.ssp.model.Unidade;
 import br.gov.ma.ssp.model.dto.MensagemNotificacaoDto;
 import br.gov.ma.ssp.model.dto.MensagemNotificacaoVisualizarDto;
@@ -149,7 +142,7 @@ public class MensagemNotificacaoController {
 	public ModelAndView paginacao(
 			@RequestParam(value="page", defaultValue = "0") int pagina, 
 			@RequestParam(value="tamanho", defaultValue = "10" ) int tamanho/* , HttpSession session */){
-		ModelAndView mv = new ModelAndView("interno/mensagemNotificacao/index");
+		ModelAndView mv = new ModelAndView("interno/mensagemNotificacao/todasNotificacoes");
 		Pageable pageable = PageRequest.of(pagina, tamanho,Sort.by("mensagem.tipoMensagem.id","mensagem.dataCriacao").ascending());
 		Funcionario funcionario = new Funcionario();
 		funcionario.setIdFuncionario(1);
@@ -168,6 +161,19 @@ public class MensagemNotificacaoController {
 	
 	}
 	
+	
+	
+	@ResponseBody
+	@PostMapping("/visualizar/{id}")
+	public boolean visualizar(@PathVariable("id") MensagemNotificacao mensagem /* , HttpSession session */) {
+		Funcionario funcionario = new Funcionario();
+		funcionario.setIdFuncionario(1);
+		Unidade unidade = new Unidade();
+		unidade.setId(1);
+		funcionario.setUnidade(unidade);
+		System.err.println("visualizei :D");
+		return mensagemNotificacaoService.visualizar(mensagem, funcionario);
+	}
 	
 	
 	

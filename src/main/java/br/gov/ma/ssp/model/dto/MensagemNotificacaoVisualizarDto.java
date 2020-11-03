@@ -3,12 +3,18 @@ package br.gov.ma.ssp.model.dto;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class MensagemNotificacaoVisualizarDto {
 	private Integer Id;
 	private String descricao;
+	
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm:ss")
 	private Date dataCriacao;
+	
 	private Date dataValidadeInicio;
 	private Date dataValidadeFim;
+	
 	private TipoNotificacaoDto tipoMensagem;
 	private Boolean ehUnidade;
 	private Boolean addUnidadeFilha;
@@ -17,6 +23,7 @@ public class MensagemNotificacaoVisualizarDto {
 	private Boolean temValidade;
 	private Boolean ativo;
 	private String titulo;
+	private boolean visualizado;
 	
 	private List<MensagemLinkDto> listaLink;
 	private List<MensagemImagemDto> listaImagem;
@@ -25,6 +32,12 @@ public class MensagemNotificacaoVisualizarDto {
 	private List<Integer> funcionarioDestinatario;
 
 	
+	public Boolean getVisualizado() {
+		return visualizado;
+	}
+	public void setVisualizado(boolean visualizado) {
+		this.visualizado = visualizado;
+	}
 	public String getTitulo() {
 		return titulo;
 	}

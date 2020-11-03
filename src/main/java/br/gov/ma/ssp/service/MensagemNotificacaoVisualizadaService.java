@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.gov.ma.ssp.model.Funcionario;
 import br.gov.ma.ssp.model.MensagemNotificacaoVisualizada;
 import br.gov.ma.ssp.repository.MensagemNotificacaoVisualizadaRepository;
 
@@ -29,4 +30,11 @@ public class MensagemNotificacaoVisualizadaService {
 	public List<MensagemNotificacaoVisualizada> pesquisaTodosVisualizada(){
 		return mensagemNotificacaoVisualizadaRepository.findAll();
 	}
+
+	public List<MensagemNotificacaoVisualizada> pesquisarPorFuncionarioEMensagem(Funcionario funcionario, Integer id) {
+		return mensagemNotificacaoVisualizadaRepository
+		.findByFuncionarioDestinatarioAndMensagemId(funcionario, id);
+	}
+	
+	
 }

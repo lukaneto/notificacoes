@@ -9,12 +9,21 @@ public class PaginaNotificacaoDto {
 	private Integer quantidadeNaoVisualizada;
 	private List<MensagemNotificacaoVisualizarDto> notificacao;
 	private List<MensagemNotificacaoVisualizarDto> notificacaoNaoVisualizada;
+	private  List<MensagemNotificacaoVisualizarDto> todasNotificacoes;
 	
 	private Integer pagina;
 	private Integer maxPagina;
 	
 	
 	
+	
+	
+	public List<MensagemNotificacaoVisualizarDto> getTodasNotificacoes() {
+		return todasNotificacoes;
+	}
+	public void setTodasNotificacoes(List<MensagemNotificacaoVisualizarDto> todasNotificacoes) {
+		this.todasNotificacoes = todasNotificacoes;
+	}
 	public List<MensagemNotificacaoVisualizarDto> getNotificacaoNaoVisualizada() {
 		return notificacaoNaoVisualizada;
 	}
