@@ -4,13 +4,17 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="interno/layout/templateInterno">
 
-<section layout:fragment="content" class="sigma-section container">
-	<form th:object="${mensagem}" method="POST"
+<section layout:fragment="content" class="sigma-section container" style="width: 100%">
+	<div class="row" style="border: medium;">
+		<div class="col-sm-5">
+		<aside>
+		<form th:object="${mensagem}" method="POST"
 		th:action="@{/notificacao/salvar}" enctype="multipart/form-data">
 		<link rel="stylesheet"
 			th:href="@{/vendors/bootstrap/bootstrap.min.css}" />
 		<link rel="stylesheet"
 			th:href="@{/vendors/bootstrap-treeview/bootstrap-treeview.css}" />
+			<link rel="stylesheet" th:href="@{/sigma/css/formatoNotificacao.css}"></link>
 		<script th:src="@{/vendors/jquery/jquery-3.1.1.min.js}"></script>
 		<script th:src="@{/vendors/bootstrap/bootstrap.min.js}"></script>
 		<script th:src="@{/vendors/jquerymask/jquery.mask.min.js}"></script>
@@ -21,7 +25,7 @@
 	<link rel="stylesheet" th:href="@{/vendors/font-awesome/4.7.0/css/font-awesome.min.css}"/>
 
 
-		<div class="panel panel-default">
+		<div class="panel panel-default" style="width: 110%;">
 
 			<div class="panel-heading">Cadastrar Notificação</div>
 
@@ -52,7 +56,7 @@
 							</div>
 							<div class="form-group">
 								<label for="">Digite o titulo</label> <input
-									class="form-control" th:field="*{titulo}"></input>
+									class="form-control" th:field="*{titulo}" id="titulo"></input>
 							</div>
 						</div>
 					</div>
@@ -75,13 +79,68 @@
 								<label for="">Digite a mensagem</label>
 								<textarea style="resize: vertical;"
 									class="form-control auto_txt_area" th:field="*{descricao}"
-									rows="3"></textarea>
+									rows="3" id="txtarea"></textarea>
 
 							</div>
 						</div>
 					</div>
 
 				</div>
+				
+			<div class="row">
+
+				<div class="col-sm-12">
+					<div class="panel panel-default">
+
+						<div class="panel-heading" style="padding-bottom:20px">
+							<span style="padding-top:10px;">Cadastrar Midia</span>
+							<button id="add-midia" type="button"
+								class="btn pull-right btn-success btn-sm">
+								<i class="fa fa-link"></i> Nova Midia
+							</button>
+						</div>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-sm-12"></div>
+						</div>
+
+						<div class="row">
+
+							<div class="col-sm-12">
+								<div id="div-lista-midias"></div>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+			<div class="row">
+					<div class="col-sm-12">
+						<div class="panel panel-default">
+							<div class="panel-heading" style="padding-bottom:20px">
+								Cadastrar Link
+								<button id="add-link" type="button"
+									class="btn  pull-right btn-success btn-sm" style="margin-bottom:50px;">
+									<i class="fa fa-link" aria-hidden="true"></i>Novo link's
+								</button>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-sm-12"></div>
+							</div>
+	
+							<div class="row">
+	
+								<div class="col-sm-12">
+									<div id="div-lista-links"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
 				<div class="row">
 					<div class="col-sm-12">
 
@@ -247,69 +306,6 @@
 				</div>
 
 			</div>
-			<div class="row">
-
-				<div class="col-sm-12">
-					<div class="panel panel-default">
-
-						<div class="panel-heading">
-							Cadastrar Link de Notificação
-							<button id="add-link" type="button"
-								class="btn  pull-right btn-success btn-sm ">
-								<i class="fa fa-link"></i> Novo link's
-							</button>
-						</div>
-					</div>
-					<div class="panel-body">
-						<div class="row">
-							<div class="col-sm-12"></div>
-						</div>
-
-						<div class="row">
-
-							<div class="col-sm-12">
-								<div id="div-lista-links"></div>
-							</div>
-						</div>
-
-
-					</div>
-				</div>
-			</div>
-
-
-			<div class="row">
-
-				<div class="col-sm-12">
-					<div class="panel panel-default">
-
-						<div class="panel-heading">
-							Cadastrar Midia DE Notificacao
-							<button id="add-midia" type="button"
-								class="btn pull-right btn-success btn-sm">
-								<i class="fa fa-link"></i> Nova Midia
-							</button>
-						</div>
-					</div>
-					<div class="panel-body">
-						<div class="row">
-							<div class="col-sm-12"></div>
-						</div>
-
-						<div class="row">
-
-							<div class="col-sm-12">
-								<div id="div-lista-midias"></div>
-							</div>
-						</div>
-
-
-					</div>
-				</div>
-			</div>
-
-
-
 
 			<div class="panel-footer text-right">
 
@@ -325,15 +321,29 @@
 			</div>
 		</div>
 	</form>
-
-
+	</aside>
+	</div>
+	<div class="col-sm-7">
+		<div class="panel panel-default" style="min-height: 350px; max-height:3500px; max-inline-size: 1000px; margin-left: 60px">
+			<div class="panel-heading">Pré-visualização</div>
+			<div>
+				<p id="autofill_txt" class="titulo_notificacao">Título da notificação</p>
+			</div>
+			<div>
+				<p id="autofill_txtarea" class="mensagem_notificacao">Texto da notificação</p>
+			</div>
+		</div>
+	</div>
+	</div>
 </section>
 <th:block layout:fragment="sigma-js">
 
 	<script type="text/javascript" DEFER="DEFER"
 		th:src="@{/sigma/mensagemNotificacao.js}"></script>
-	<script type="text/javascript" th:src="@{/sigma/removerLink.js}"
-		DEFER="DEFER"></script>
+		<script type="text/javascript" DEFER="DEFER"
+		th:src="@{/sigma/preencheAutomatico.js}"></script>
+	<!--<script type="text/javascript" th:src="@{/sigma/removerLink.js}"
+		DEFER="DEFER"></script>-->
 
 
 </th:block>

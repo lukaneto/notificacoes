@@ -1,0 +1,15 @@
+@charset "ISO-8859-1";
+
+
+.titulo_notificacao{
+	text-align: center;
+	font-family: Arial Narrow, sans-serif;	
+	font-size:20px;
+	font-weight: bolder;
+}
+
+.mensagem_notificacao{
+	text-align: center;
+	font-family: verdana,arial;
+	font-size:20px;	
+}

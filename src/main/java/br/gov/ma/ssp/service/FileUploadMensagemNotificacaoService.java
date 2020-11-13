@@ -21,7 +21,7 @@ public class FileUploadMensagemNotificacaoService {
 
 	
 	//@Value("${varservidorarquivo}")
-	private final String VAR_SERVIDOR_ARQUIVO= "C:\\Users\\luiz\\Pictures\\opt\\data\\sigma-desenvolvimento\\Notificacoes\\";
+	private final String VAR_SERVIDOR_ARQUIVO= "C:\\Users\\sspma\\Documents\\opt\\data\\sigma-desenvolvimento\\Notificacoes\\";
 	
 	public FileNotificacaoDto salvarDocumento(MultipartFile multipartFile) {
 		

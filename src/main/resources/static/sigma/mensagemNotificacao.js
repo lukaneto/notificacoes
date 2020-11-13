@@ -26,7 +26,7 @@ $("#add-link").on("click",function(){
 	+"</div>"
 	+ "<div class='col-sm-5'>"
 		+"<div class='form-group'> <label>Informe o link </label>"
-		+" <input type='text' name='listaLink["+qtdLinks +"].link' id='listaLink["+qtdLinks +"].link' />"
+		+" <input type='text' style='50px' name='listaLink["+qtdLinks +"].link' id='listaLink["+qtdLinks +"].link' />"
 		+"</div>"
 	+"</div>"
 	+ "<div class='col-sm-2'>"
