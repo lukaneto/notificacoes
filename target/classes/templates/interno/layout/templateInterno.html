@@ -3,7 +3,9 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<head th:replace="interno/layout/fragments/headerinc :: headerinc"></head>
+<head th:replace="interno/layout/fragments/headerinc :: headerinc">
+<link rel="shortcut icon" href="#" />
+</head>
 
 <body id="loading-custom-overlay" th:class="${!#strings.isEmpty(mensagemConcluirRegistro)} ?'modal-open' " th:style="${!#strings.isEmpty(mensagemConcluirRegistro)} ?'padding-right: 15px; '">
 	<div id="custom-overlay" class="loading-hidden"  
