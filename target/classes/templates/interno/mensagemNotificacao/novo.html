@@ -91,7 +91,6 @@
 
 				<div class="col-sm-12">
 					<div class="panel panel-default">
-
 						<div class="panel-heading" style="padding-bottom:20px">
 							<span style="padding-top:10px;">Cadastrar Midia</span>
 							<button id="add-midia" type="button"
@@ -102,17 +101,18 @@
 					</div>
 					<div class="panel-body">
 						<div class="row">
-							<div class="col-sm-12"></div>
-						</div>
-
-						<div class="row">
-
 							<div class="col-sm-12">
-								<div id="div-lista-midias"></div>
 							</div>
 						</div>
 
-
+						<div class="row">
+						
+							<div class="col-sm-12">
+								<div id="div-lista-midias">
+									<!-- <input type='file' id="imgInp" /> -->
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -333,11 +333,7 @@
 				<p id="autofill_txtarea" class="mensagem_notificacao">Texto da notificação</p>
 			</div>
 			<div>
-				<input type=file>
-			    <img />
-			    <input type=button class=hide value="Adicionar outro">
-			    <script type="text/javascript" DEFER="DEFER"
-		th:src="@{/sigma/script.js}"></script>
+				<img id="blah" src="#" alt="" />
 			</div>
 		</div>
 	</div>
@@ -349,6 +345,8 @@
 		th:src="@{/sigma/mensagemNotificacao.js}"></script>
 		<script type="text/javascript" DEFER="DEFER"
 		th:src="@{/sigma/preencheAutomatico.js}"></script>
+		<script type="text/javascript" DEFER="DEFER"
+		th:src="@{/sigma/script.js}"></script>
 	<!--<script type="text/javascript" th:src="@{/sigma/removerLink.js}"
 		DEFER="DEFER"></script>-->
 

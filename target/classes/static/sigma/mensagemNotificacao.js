@@ -92,7 +92,7 @@ $("#add-midia").on("click",function(){
 	var $str="<div class='lista-midia-inputs'>"
 	+ "<div class='col-sm-10'>"
 		+"<div class='form-group'> <label>Adicione a Imagem </label>"
-		+" <input type='file' name='listaImagem["+qtdLinks+"]' id='listaImagem["+qtdLinks+"]' class='file' data-show-upload='true' data-show-caption='true' />"
+		+" <input type='file' name='listaImagem["+qtdLinks+"]' id='imgInp' class='file' data-show-upload='true' data-show-caption='true' />"
 		+"</div>"
 	+"</div>"
 	+ "<div class='col-sm-2'>"
