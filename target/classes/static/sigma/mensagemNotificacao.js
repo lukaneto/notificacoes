@@ -92,7 +92,7 @@ $("#add-midia").on("click",function(){
 	var $str="<div class='lista-midia-inputs'>"
 	+ "<div class='col-sm-10'>"
 		+"<div class='form-group'> <label>Adicione a Imagem </label>"
-		+" <input type='file' name='listaImagem["+qtdLinks+"]' id='imgInp' class='file' data-show-upload='true' data-show-caption='true' />"
+		+" <input type='file' name='listaImagem["+qtdLinks+"]' id='listaImagem-"+qtdLinks +"' class='file' data-show-upload='true' data-show-caption='true' />"
 		+"</div>"
 	+"</div>"
 	+ "<div class='col-sm-2'>"
@@ -105,9 +105,13 @@ $("#add-midia").on("click",function(){
 	$("#div-lista-midias").append(
 		$str
 	);
-
+	
+	$("#listaImagem-"+qtdLinks).change(function(){
+    readURL(this);
 });
 	
+});
+
 function removeMidia(objeto){
 	var pai = objeto.parent('div').parent('div').parent('div').parent('div');
 	var index=-1;
@@ -138,7 +142,9 @@ function removeMidia(objeto){
 		   }
 		   
     });
-
+	
+	var imagemPreview = document.getElementById("blah");
+	imagemPreview.parentNode.removeChild(imagemPreview);
 }
 
 

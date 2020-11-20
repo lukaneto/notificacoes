@@ -327,12 +327,12 @@
 		<div class="panel panel-default" style="min-height: 350px; max-height:3500px; max-inline-size: 1000px; margin-left: 60px">
 			<div class="panel-heading">Pré-visualização</div>
 			<div>
-				<p id="autofill_txt" class="titulo_notificacao">Título da notificação</p>
+				<p id="autofill_txt" class="titulo_notificacao"></p>
 			</div>
 			<div>
-				<p id="autofill_txtarea" class="mensagem_notificacao">Texto da notificação</p>
+				<p id="autofill_txtarea" class="mensagem_notificacao"></p>
 			</div>
-			<div>
+			<div id="imagensPreview">
 				<img id="blah" src="#" alt="" />
 			</div>
 		</div>
@@ -340,13 +340,12 @@
 	</div>
 </section>
 <th:block layout:fragment="sigma-js">
-
+	<script type="text/javascript" DEFER="DEFER"
+		th:src="@{/sigma/script.js}"></script>
 	<script type="text/javascript" DEFER="DEFER"
 		th:src="@{/sigma/mensagemNotificacao.js}"></script>
 		<script type="text/javascript" DEFER="DEFER"
 		th:src="@{/sigma/preencheAutomatico.js}"></script>
-		<script type="text/javascript" DEFER="DEFER"
-		th:src="@{/sigma/script.js}"></script>
 	<!--<script type="text/javascript" th:src="@{/sigma/removerLink.js}"
 		DEFER="DEFER"></script>-->
 
