@@ -96,8 +96,8 @@ $("#add-midia").on("click",function(){
 		+"</div>"
 	+"</div>"
 	+ "<div class='col-sm-2'>"
-		+"<div class='form-group'>" 
-			+"<button  type='button' class='btn btn-danger' onclick='removeMidia($(this))' > <i class='fa fa-icon-trash'>  </i> Remover</button>"
+		+"<div class='form-group' id='divBotaoRemove'>" 
+			+"<button  type='button' class='btn btn-danger' onclick='removeMidia($(this))' name='"+qtdLinks+"' > <i class='fa fa-icon-trash'>  </i> Remover</button>"
 		+"</div>"	
 	+"</div>"
 	+" </div>";
@@ -146,7 +146,7 @@ function removeMidia(objeto){
            index = parseInt(valorArray);
 	});
 	objeto.parent('div').parent('div').parent('div').remove();	
-
+	
 	pai.find('input').each(function(){
 		   
 		   if(index=>0){
@@ -165,10 +165,13 @@ function removeMidia(objeto){
 		   
     });
 	
-	var imagemPreview = document.getElementById("blah");
-	if(imagemPreview!=null){
-		imagemPreview.parentNode.removeChild(imagemPreview);	
-	}
+	
+	
+	var imagemPreview = document.getElementById('imgSet[0]');
+	console.log(testeee);
+	//if(imagemPreview!=null && imagemPreview.length > 0){
+	imagemPreview.parentNode.removeChild(imagemPreview);	
+	//}
 }
 
 
