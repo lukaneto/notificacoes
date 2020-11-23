@@ -92,7 +92,7 @@ $("#add-midia").on("click",function(){
 	var $str="<div class='lista-midia-inputs'>"
 	+ "<div class='col-sm-10'>"
 		+"<div class='form-group'> <label>Adicione a Imagem </label>"
-		+" <input type='file' name='listaImagem["+qtdLinks+"]' id='listaImagem-"+qtdLinks +"' class='file' data-show-upload='true' data-show-caption='true' />"
+		+" <input type='file' name='listaImagem["+qtdLinks+"]' id='listaImagem["+qtdLinks+"]' class='file' data-show-upload='true' data-show-caption='true' />"
 		+"</div>"
 	+"</div>"
 	+ "<div class='col-sm-2'>"
@@ -106,7 +106,29 @@ $("#add-midia").on("click",function(){
 		$str
 	);
 	
-	$("#listaImagem-"+qtdLinks).change(function(){
+	
+	$("#imagensPreview").append('<img id="imgSet['+qtdLinks+']" src="#" alt="" class="stiloImagem" />');
+	idImgNot = $('#' + $.escapeSelector('imgSet['+qtdLinks+']'));
+	window.readURL = function(input){
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $(idImgNot).attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+		//console.log("parte1");
+    }
+}
+
+	//var idMsgNot = document.getElementById("'listaImagem["+qtdLinks+"]'");
+	
+	idMsgNot = $('#' + $.escapeSelector('listaImagem['+qtdLinks+']'));
+	//console.log('funfou aqui: '+idMsgNot);
+	$(idMsgNot).change(function(){
+		//console.log("parte2");
     readURL(this);
 });
 	
@@ -144,7 +166,9 @@ function removeMidia(objeto){
     });
 	
 	var imagemPreview = document.getElementById("blah");
-	imagemPreview.parentNode.removeChild(imagemPreview);
+	if(imagemPreview!=null){
+		imagemPreview.parentNode.removeChild(imagemPreview);	
+	}
 }
 
 
@@ -199,3 +223,5 @@ $('select[name="funcionario_select"]').change(function() {
 
 
 
+
+						
