@@ -97,7 +97,7 @@ $("#add-midia").on("click",function(){
 	+"</div>"
 	+ "<div class='col-sm-2'>"
 		+"<div class='form-group' id='divBotaoRemove'>" 
-			+"<button  type='button' class='btn btn-danger' onclick='removeMidia($(this))' name='"+qtdLinks+"' > <i class='fa fa-icon-trash'>  </i> Remover</button>"
+			+"<button  type='button' class='btn btn-danger' onclick='removeMidia($(this))' id='"+qtdLinks+"' > <i class='fa fa-icon-trash'>  </i> Remover</button>"
 		+"</div>"	
 	+"</div>"
 	+" </div>";
@@ -122,7 +122,7 @@ $("#add-midia").on("click",function(){
 		//console.log("parte1");
     }
 }
-
+	
 	//var idMsgNot = document.getElementById("'listaImagem["+qtdLinks+"]'");
 	
 	idMsgNot = $('#' + $.escapeSelector('listaImagem['+qtdLinks+']'));
@@ -156,7 +156,7 @@ function removeMidia(objeto){
 	           $.each(arrayMatch, function(i, valor) {
 	           		valorArray+=valor;
 	           });
-	           console.log('index '+index+' valorArray '+ valorArray);
+	           //console.log('index '+index+' valorArray '+ valorArray);
 	           if(index <= parseInt(valorArray) ){
 	           	   nome.attr('id',nome.attr('id').replace(/[0-9]/gm,parseInt(valorArray)-1 ));
 			       nome.attr('name',nome.attr('name').replace(/[0-9]/gm,parseInt(valorArray)-1 ));   
@@ -165,10 +165,11 @@ function removeMidia(objeto){
 		   
     });
 	
+	idButtonRemov = objeto[0].id;
 	
+	var imagemPreview = document.getElementById('imgSet['+idButtonRemov+']');
 	
-	var imagemPreview = document.getElementById('imgSet[0]');
-	console.log(testeee);
+	//console.log(objeto[0].id);
 	//if(imagemPreview!=null && imagemPreview.length > 0){
 	imagemPreview.parentNode.removeChild(imagemPreview);	
 	//}
