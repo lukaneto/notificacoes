@@ -8,15 +8,23 @@ $("input[name='temValidade']").on("click",function(){
 
 });
 	
+	
 $("#add-link").on("click",function(){
 
-	var qtdLinks=0;
 	
+	function uuidv4() {
+	  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+	    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+	    return v.toString(16);
+	  });
+	}
 
-	$.each($(".lista-links-inputs"), function() {
-		qtdLinks++;
-	});
-
+	/*$.each($(".lista-links-inputs"), function() {
+		qtdLinkss++;
+	});*/
+	
+	var qtdLinks = uuidv4();	
+	
 	var $str="<div class='lista-links-inputs'>"
 	+" <input type='hidden' name='listaLink["+qtdLinks +"].id' id='listaLink["+qtdLinks +"].id' />"
 	+ "<div class='col-sm-5'>"
@@ -32,7 +40,7 @@ $("#add-link").on("click",function(){
 	+ "<div class='col-sm-2'>"
 		+"<div class='form-group'>" 
 			+"<button  type='button' class='btn btn-danger remover-link-instance' data='identificador='"+qtdLinks
-			+" onclick='removeLink($(this))' > <i class='fa fa-icon-trash'>  </i> Remover</button>"
+			+" onclick='removeLink($(this))' id='"+qtdLinks+"'> <i class='fa fa-icon-trash'>  </i> Remover</button>"
 		+"</div>"	
 	+"</div>"
 	+" </div>";
@@ -40,7 +48,22 @@ $("#add-link").on("click",function(){
 	$("#div-lista-links").append(
 		$str
 	);
-
+	
+	
+	//$("#idDivTituloLink").append('<div id="divDentroTitulo['+qtdLinks+']"></div>');
+	
+	$("#idDivTituloLink").append('<p id="pDentroTitulo['+qtdLinks+']">teste</p>');
+	
+	pTextLink = 'pDentroTitulo['+qtdLinks+']';
+	
+	idTextInputBox = $('#' + $.escapeSelector(pTextLink));
+	
+	//$(document).on('keyup',idInputTitulo, function(){
+		//$(idParaTitLink).text($(this).val());
+	//});
+	
+	console.log(pTextLink);
+	console.log(idTextInputBox);
 });
 	
 	
@@ -66,7 +89,7 @@ function removeLink(objeto){
 	           $.each(arrayMatch, function(i, valor) {
 	           		valorArray+=valor;
 	           });
-	           console.log('index '+index+' valorArray '+ valorArray);
+	           //console.log('index '+index+' valorArray '+ valorArray);
 	           if(index <= parseInt(valorArray) ){
 	           	   nome.attr('id',nome.attr('id').replace(/[0-9]/gm,parseInt(valorArray)-1 ));
 			       nome.attr('name',nome.attr('name').replace(/[0-9]/gm,parseInt(valorArray)-1 ));   
@@ -74,6 +97,16 @@ function removeLink(objeto){
 		   }
 		   
     });
+	
+	
+	idButtonRemovLink = objeto[0].id;
+	
+	var idParaRemoverLink= document.getElementById('pDentroTitulo['+idButtonRemovLink+']');
+	
+	//console.log(objeto[0].id);
+	if(idParaRemoverLink!=null){
+		idParaRemoverLink.parentNode.removeChild(idParaRemoverLink);	
+	}
 
 }
 
@@ -92,7 +125,7 @@ $("#add-midia").on("click",function(){
 	var $str="<div class='lista-midia-inputs'>"
 	+ "<div class='col-sm-10'>"
 		+"<div class='form-group'> <label>Adicione a Imagem </label>"
-		+" <input type='file' name='listaImagem["+qtdLinks+"]' id='listaImagem["+qtdLinks+"]' class='file' data-show-upload='true' data-show-caption='true' />"
+		+" <input type='file' name='listaImagem["+qtdLinks+"]' id='listaImagem["+qtdLinks+"]' class='file' data-show-upload='true' data-show-caption='true' accept='image/*' />"
 		+"</div>"
 	+"</div>"
 	+ "<div class='col-sm-2'>"
@@ -126,7 +159,7 @@ $("#add-midia").on("click",function(){
 	//var idMsgNot = document.getElementById("'listaImagem["+qtdLinks+"]'");
 	
 	idMsgNot = $('#' + $.escapeSelector('listaImagem['+qtdLinks+']'));
-	//console.log('funfou aqui: '+idMsgNot);
+	//console.log(idMsgNot);
 	$(idMsgNot).change(function(){
 		//console.log("parte2");
     readURL(this);
@@ -150,7 +183,7 @@ function removeMidia(objeto){
 	pai.find('input').each(function(){
 		   
 		   if(index=>0){
-		   		var nome = $(this); 
+		   	   var nome = $(this); 
 			   var arrayMatch= nome.attr('id').match(/[0-9]/gm);
 	           var valorArray ='';
 	           $.each(arrayMatch, function(i, valor) {
@@ -170,9 +203,9 @@ function removeMidia(objeto){
 	var imagemPreview = document.getElementById('imgSet['+idButtonRemov+']');
 	
 	//console.log(objeto[0].id);
-	//if(imagemPreview!=null && imagemPreview.length > 0){
-	imagemPreview.parentNode.removeChild(imagemPreview);	
-	//}
+	if(imagemPreview!=null){
+		imagemPreview.parentNode.removeChild(imagemPreview);	
+	}
 }
 
 

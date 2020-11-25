@@ -161,8 +161,6 @@ public class MensagemNotificacaoController {
 	
 	}
 	
-	
-	
 	@ResponseBody
 	@PostMapping("/visualizar/{id}")
 	public boolean visualizar(@PathVariable("id") MensagemNotificacao mensagem /* , HttpSession session */) {
