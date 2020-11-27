@@ -29,7 +29,7 @@ $("#add-link").on("click",function(){
 	+" <input type='hidden' name='listaLink["+qtdLinks +"].id' id='listaLink["+qtdLinks +"].id' />"
 	+ "<div class='col-sm-5'>"
 		+"<div class='form-group'> <label>Informe o titulo do link </label>"
-		+" <input type='text' name='listaLink["+qtdLinks +"].titulo' id='listaLink["+ qtdLinks+"].titulo' />"
+		+" <input type='text' name='listaLink["+qtdLinks +"].titulo' id='listaLink["+qtdLinks +"].titulo' onkeypress='capIdTitulo($(this.id))' />" //input titut
 		+"</div>"
 	+"</div>"
 	+ "<div class='col-sm-5'>"
@@ -50,23 +50,41 @@ $("#add-link").on("click",function(){
 	);
 	
 	
+	
+	
 	//$("#idDivTituloLink").append('<div id="divDentroTitulo['+qtdLinks+']"></div>');
 	
-	$("#idDivTituloLink").append('<p id="pDentroTitulo['+qtdLinks+']">teste</p>');
+	$("#idDivTituloLink").append('<p id="testeaqui">testeeee</p>');
 	
-	pTextLink = 'pDentroTitulo['+qtdLinks+']';
+	//pTextLink = 'pDentroTitulo['+qtdLinks+']';
 	
-	idTextInputBox = $('#' + $.escapeSelector(pTextLink));
+	idTextInputBox = $('#' + $.escapeSelector('listaLink['+qtdLinks +'].titulo'));
 	
-	//$(document).on('keyup',idInputTitulo, function(){
-		//$(idParaTitLink).text($(this).val());
+	//console.log(pTextLink);
+	//console.log(idTextInputBox);
+	
+	//$(document).ready(function() {
+	
+	
 	//});
-	
-	console.log(pTextLink);
-	console.log(idTextInputBox);
 });
 	
+
+function capIdTitulo(objeto){
+	//console.log('funfando...');
+	$("#CourseSelect").change(loadTeachers).change();
+	idInputTitulo = objeto.prevObject[0].activeElement.id;
 	
+	idToTitulo = $('#' + $.escapeSelector(idInputTitulo));
+	
+	//$(document).on('keyup', idToTitulo, function() {
+	     $('#testeaqui').text($(this).val());
+	
+		 //testeLokao = $('#testeaqui').text();
+		 console.log( testeLokao);
+	 //});
+}
+
 function removeLink(objeto){
 	var pai = objeto.parent('div').parent('div').parent('div').parent('div');
 	var index=-1;
