@@ -64,8 +64,6 @@ $("#add-link").on("click",function(){
 	//console.log(idTextInputBox);
 	
 	//$(document).ready(function() {
-	
-	
 	//});
 });
 	
